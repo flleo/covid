@@ -1,7 +1,7 @@
 <?php
-include "navbar.php";
 
-$email = $pass = $dni = $code = '';
+include("navbar.php");
+$login = $email = $pass = $dni = $code = '';
 if(isset($_SESSION['email'])) $email = $_SESSION['email'];
 if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
 if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
@@ -10,8 +10,10 @@ if(isset($_SESSION['code'])) $code = $_SESSION['code'];
 if(isset($_GET['log'])) {
     if($_GET['log'] == 'pa') {        
         $_SESSION['user_type'] = 'paciente';
+        
     } else {
         $_SESSION['user_type'] = 'usuario';
+        
     }
 }
 
@@ -39,13 +41,15 @@ if(isset($_POST['submit'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/css.css">
 </head>
 
 <body>
+    <?php   ?>
     <div class="container d-flex justify-content-center p-5">
         <?php if(isset($_SESSION['user_type'])) { ?>
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="index.html" method="post">
+            <form id="login-form" action="./validacion/validarLogin.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
                     if($_SESSION['user_type'] == 'usuario') {
@@ -56,7 +60,7 @@ if(isset($_POST['submit'])) {
                     </div>
                     <div class="form-group">
                     <label for="password" class="text-info">Password:</label><br>
-                    <input type="text" name="password" id="password" class="form-control" value="'.$pass.'" required>
+                    <input type="password" name="password" id="password" class="form-control" value="'.$pass.'" required>
                     </div>
                     ';
                     }  else {
@@ -75,14 +79,12 @@ if(isset($_POST['submit'])) {
                 <div class="form-group">
                     <label for="remember-me" class="text-info"><span>Remember me</span>&nbsp;<span><input
                                 id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                    <input type="submit" name="submit" class="btn btn-info btn-md" value="Entrar">
+                    <input type="click" name="button" class="btn btn-info btn-md" value="Entrar" data-action=<?php echo $_SESSION['user_type'] ?>>
                 </div>
             </form>
         </div>
         <?php } ?>
     </div>
-
-
 
 
     <!-- Optional JavaScript -->
@@ -96,6 +98,7 @@ if(isset($_POST['submit'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+     <script src="./js/scripts.js" type='module'></script>
 </body>
 
 </html>

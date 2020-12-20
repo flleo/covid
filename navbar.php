@@ -4,7 +4,7 @@ $user = 'User';
 if(isset($_SESSION['user'])) $user = $_SESSION['user'];
 ?>
 <!-- author: fedelleos@gmail.com -->
-<link rel="stylesheet" href="css/css.css">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="index.php"><img id='logo' src="img/logo.jpg"><span class="ml-5 text-success">Centro Covid
             2020</span></a>

@@ -1,6 +1,8 @@
 <?php
 include 'navbar.php';
 
+/*  echo $action  */
+
 $nombre = $apellido1 = $apellido2 = $email = $pass = $dni = $telefono = '';
 ?>
 
@@ -16,12 +18,13 @@ $nombre = $apellido1 = $apellido2 = $email = $pass = $dni = $telefono = '';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/css.css">
 </head>
 
 <body>
     <div class="container d-flex justify-content-center p-5">
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="<?php echo $action ?>" method="post">
+            <form id="login-form" action="" method="post">
                 <h3 class="text-center text-info">Modificar Usuario</h3>
                 <?php
                     if($_SESSION['user_type'] == 'usuario') {
