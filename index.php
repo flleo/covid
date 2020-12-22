@@ -1,6 +1,6 @@
 <?php
-
-include("navbar.php");
+session_start();
+$_SESSION['nombre'] = 'Login';
 $login = $email = $pass = $dni = $code = '';
 if(isset($_SESSION['email'])) $email = $_SESSION['email'];
 if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
@@ -9,11 +9,9 @@ if(isset($_SESSION['code'])) $code = $_SESSION['code'];
 
 if(isset($_GET['log'])) {
     if($_GET['log'] == 'pa') {        
-        $_SESSION['user_type'] = 'paciente';
-        
+        $_SESSION['user_type'] = 'paciente';       
     } else {
-        $_SESSION['user_type'] = 'usuario';
-        
+        $_SESSION['user_type'] = 'usuario';        
     }
 }
 
@@ -28,28 +26,29 @@ if(isset($_POST['submit'])) {
 }
   
 ?>
-
 <!doctype html>
 <html lang="es">
-
 <head>
-    <title>covid - login</title>
+<title>Covid - Login</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="fedelleos@gmail.com" />
+    <meta name="author" content="fedelleos@gmail.com" />  
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- css -->
     <link rel="stylesheet" href="css/css.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
 </head>
-
 <body>
-    <?php   ?>
+<?php include 'navbar.php'; ?>
     <div class="container d-flex justify-content-center p-5">
         <?php if(isset($_SESSION['user_type'])) { ?>
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="./validacion/validarLogin.php" method="post">
+            <form id="login-form" action="./data_source/validarLogin.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
                     if($_SESSION['user_type'] == 'usuario') {
@@ -77,8 +76,6 @@ if(isset($_POST['submit'])) {
                     }
                 ?>
                 <div class="form-group">
-                    <label for="remember-me" class="text-info"><span>Remember me</span>&nbsp;<span><input
-                                id="remember-me" name="remember-me" type="checkbox"></span></label><br>
                     <input type="click" name="button" class="btn btn-info btn-md" value="Entrar" data-action=<?php echo $_SESSION['user_type'] ?>>
                 </div>
             </form>
@@ -87,18 +84,16 @@ if(isset($_POST['submit'])) {
     </div>
 
 
-    <!-- Optional JavaScript -->
+   
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-     <script src="./js/scripts.js" type='module'></script>
+    <script src="./js/scripts.js" type='module'></script>
 </body>
 
 </html>

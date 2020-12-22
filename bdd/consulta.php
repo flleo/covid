@@ -12,6 +12,8 @@
             return $vista;
         }
 
+      
+
         public static function verificarEmail($conn){
 
             $stmt = $conn->prepare("SELECT * FROM `user` WHERE Email = ?");

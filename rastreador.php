@@ -1,22 +1,12 @@
 <?php
 session_start();
-/*  echo $action  */
-$page = "Modificar Usuario";
-$nombre = $apellido1 = $apellido2 = $email = $pass = $dni = $telefono = '';
-if(isset($_SESSION['nombre'])) $nombre = $_SESSION['nombre'];
-if(isset($_SESSION['apellido1'])) $apellido1 = $_SESSION['apellido1'];
-if(isset($_SESSION['apellido2'])) $apellido2 = $_SESSION['apellido2'];
-if(isset($_SESSION['email'])) $email = $_SESSION['email'];
-if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
-if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
-if(isset($_SESSION['telefono'])) $telefono = $_SESSION['telefono'];
-
 ?>
+
 
 <!doctype html>
 <html lang="es">
 <head>
-<title>Covid - Modificar Usuario</title>
+<title>Covid - Rastreador</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,12 +19,12 @@ if(isset($_SESSION['telefono'])) $telefono = $_SESSION['telefono'];
 </head>
 <body>
 <?php include 'navbar.php'; ?>
-
     <div class="container d-flex justify-content-center p-5">
         <div id="login-box" class="col-md-6">
             <form id="login-form" action="" method="post">
-                <h3 class="text-center text-info">Modificar Usuario</h3>
+                <h3 class="text-center text-info">Pacientes</h3>
                 <?php
+                /*
                     if($_SESSION['user_type'] == 'usuario') {
                         echo '
                         <div class="form-group">
@@ -86,6 +76,7 @@ if(isset($_SESSION['telefono'])) $telefono = $_SESSION['telefono'];
                     </div>
                     ';
                     }
+                    */
                 ?>
                 <div class="form-group">
                     <input type="submit" name="submit" class="btn btn-info btn-md" value="Grabar">
@@ -110,4 +101,3 @@ if(isset($_SESSION['telefono'])) $telefono = $_SESSION['telefono'];
 </body>
 
 </html>
-
