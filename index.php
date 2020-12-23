@@ -49,7 +49,7 @@ if(isset($_POST['submit'])) {
     <div class="container d-flex justify-content-center p-5">
         <?php if(isset($_SESSION['user_type'])) { ?>
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="./data_source/validarLogin.php" method="post">
+            <form id="login-form" action="./data_source/validar_login.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
                     if($_SESSION['user_type'] == 'usuario') {

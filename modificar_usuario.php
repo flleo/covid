@@ -63,7 +63,7 @@ if (isset($_SESSION['rol'])) {
 
     <div class="container d-flex justify-content-center p-5">
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="data_source/actualizarUsuario.php" method="post">
+            <form id="login-form" action="data_source/actualizar_usuario.php" method="post">
                 <h3 class="text-center text-info">Modificar Usuario</h3>
                 <?php
                 if ($_SESSION['user_type'] == 'usuario') {

@@ -1,6 +1,6 @@
 <?php
 if(isset($_SESSION['rol']) && $_SESSION['rol'] != 'rastreador')   header("Location:./index.php?error='1'");  
-session_start();
+
 ?>
 
 

@@ -4,7 +4,7 @@
     class Consulta{
         /* autor:Autor */
         public static function verificarUser($conn){
-
+            
             $stmt = $conn->prepare("SELECT * FROM `user` WHERE Email = ? AND Contrasena = ?");
             $stmt->bind_param("ss",$_POST["email"],$_POST["password"]); 
             $stmt->execute();

@@ -62,7 +62,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
                     for($i=1; $i<=$rows; )
                         foreach ($result as $key) {
                             echo '
-                            <form action="data_source/actualizarUsuario.php" method="post">
+                            <form action="data_source/actualizar_usuario.php" method="post">
                             <tr >
                             <th scope="row">'.$i.'</th>
                             <td hidden><input name="id" type="number" value="'.$key['ID'].'"></td>
