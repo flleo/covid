@@ -54,23 +54,23 @@ if(isset($_POST['submit'])) {
                     if($_SESSION['user_type'] == 'usuario') {
                         echo '
                     <div class="form-group">
-                    <label for="email" class="text-info">Email</label><br>
-                    <input type="email" name="email" id="email" class="form-control" value="'.$email.'" required>
+                        <label for="email" class="text-info">Email</label><br>
+                        <input type="email" name="email" id="email" class="form-control" value="'.$email.'" required>
                     </div>
                     <div class="form-group">
-                    <label for="password" class="text-info">Password:</label><br>
-                    <input type="password" name="password" id="password" class="form-control" value="'.$pass.'" required>
+                        <label for="password" class="text-info">Password:</label><br>
+                        <input type="password" name="password" id="password" class="form-control" value="'.$pass.'" required>
                     </div>
                     ';
                     }  else {
                         echo '
                     <div class="form-group">
-                    <label for="dni" class="text-info">Dni</label><br>
-                    <input type="dni" name="dni" id="dni" class="form-control" value="'.$dni .'" required>
+                        <label for="dni" class="text-info">Dni</label><br>
+                        <input type="dni" name="dni" id="dni" class="form-control" value="'.$dni .'" required>
                     </div>
                     <div class="form-group">
-                    <label for="code" class="text-info">Código de acceso</label><br>
-                    <input type="text" name="code" id="code" class="form-control" value="'.$code.'" required>
+                        <label for="code" class="text-info">Código de acceso</label><br>
+                        <input type="text" name="code" id="code" class="form-control" value="'.$code.'" required>
                     </div>
                     ';
                     }

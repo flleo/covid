@@ -1,4 +1,4 @@
-import {validateEmail,validatePass,validateNombres} from "./Exp_regulares.js";
+import {validateEmail,validatePass,validateNombres,validateDni} from "./Exp_regulares.js";
 import {error} from "./error.js";
 
 
@@ -27,6 +27,19 @@ form.addEventListener('click',(e)=>{
             break;
         
         case 'paciente':
+            // añadido José Luis
+            var dni=document.getElementById('dni').value.toUpperCase();
+            document.getElementById('dni').value=dni;
+            const validarDni = validateDni(dni);
+
+            if(validarDni){
+
+                e.target.setAttribute('type','submit');
+
+            }else{
+
+                error(document.getElementById('login-box'),"DNI no válido");
+            }
             
             break;
     

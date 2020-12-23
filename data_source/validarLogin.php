@@ -44,5 +44,31 @@
         }
     }
 
+    // añadido José Luis
+
+    if(isset($_POST['dni']) &&  isset($_POST['code'])){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://192.168.0.57/vcserver/serv_pac.php?accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $response = json_decode(curl_exec($curl),true);
+
+        curl_close($curl);
+        if (count($response)===1) {
+            $_SESSION['dni'] = $response[0]['nombre']; 
+            $_SESSION['codigo_acceso'] = $response[0]['codigo_acceso'];
+        }
+        header("Location:../paciente.php");
+
+    }
+
 
 ?>

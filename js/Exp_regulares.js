@@ -21,5 +21,17 @@ const validateNombres = (name)=>{
     else return false
 }
 
-export {validateEmail,validatePass,validateNombres};
+
+    // añadido José Luis
+
+const validateDni = (dni)=>{
+
+    const passRegexDni =/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i
+    const passRegexNie =/^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
+
+    if(passRegexDni.test(dni) || passRegexNie.test(dni)) return true
+    else return false
+}
+
+export {validateEmail,validatePass,validateNombres,validateDni};
 
