@@ -71,7 +71,12 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
                             <td ><input name="apellido2" value="'.$key['Apellido2'].'"</td>
                             <td ><input name="email" type="email" value="'.$key['Email'].'"</td>
                             <td ><input name="password" type="password" value="'.$key['Contrasena'].'"</td>
-                            <td ><input name="rol" value="'.$key['Roll'].'"</td>
+                            <td><select id="select" name="rol" >
+                            <option value="'.$key['Roll'].'">'.$key['Roll'].'</option>
+                            <option value="Medico">Medico</option>
+                            <option value="Rastreador">Rastreador</option>
+                            <option value="Administrador">Administrador</option>
+                            </select></td>
                             <td><button name="submit" class="btn" type="submit">Modificar</button></td>
                             </tr>
                             </form>
