@@ -1,5 +1,6 @@
 <?php
 
+
     class Consulta{
         /* autor:Autor */
         public static function verificarUser($conn){
@@ -12,7 +13,16 @@
             return $vista;
         }
 
-      
+       public  static function listado_usuarios($conn){
+
+            $stmt = $conn->prepare("SELECT * FROM `user`");        
+            $stmt->execute();
+            $vista= $stmt->get_result();
+            $conn->close();
+            return $vista;
+        }
+
+
 
         public static function verificarEmail($conn){
 
@@ -23,14 +33,12 @@
             return $vista;
         }
 
-        public static function IngresarUsuario($conn){
+        public static function ingresarUsuario($conn){
 
             $stmt = $conn->prepare("INSERT INTO user (Nombre,Apellido1,Apellido2,Email,Contrasena,Roll) VALUES (?,?,?,?,?,?)");
-            $stmt->bind_param("ssssss",$_POST["nameNew"],$_POST["lastNameNeW1"],$_POST["lastNameNeW2"],$_POST["emailNew"],$_POST["passNew"],$_POST["rolNew"]); 
+            $stmt->bind_param("ssssss",$_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["password"],$_POST["rol"]); 
             $stmt->execute();
-            $vista= $stmt->get_result();
-            $conn->close();
-            return $vista;
+            return true;
         }
 
         public static function deteleUser($conn){
@@ -51,10 +59,21 @@
 
         public static function updateUsers($conn){
 
-            $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido1=?,Apellido2=?,Email=?, Contrasena=?,Roll=? WHERE ID = 3");
-            $stmt->bind_param("ssssss",$_GET["nameUp"],$_GET["lastNameUp1"],$_GET["lastNameUp2"],$_GET["emailUp"],$_GET["passUp"],$_GET["rolUp"]); 
+            $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido1=?,Apellido2=?,Email=?, Contrasena=?,Roll=? WHERE ID = ?");
+            $stmt->bind_param("ssssssd",$_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["password"],$_POST["rol"],$_POST['id']); 
             $stmt->execute();
-            $vista= $stmt->get_result();  
+            if($_POST['id'] == $_SESSION['id'] ) {
+                $_SESSION['nombre'] = $_POST["nombre"];
+                $_SESSION['apellido1'] = $_POST["apellido1"];
+                $_SESSION['apellido2'] = $_POST["apellido2"];
+                $_SESSION['email'] = $_POST["email"];
+                $_SESSION['password'] = $_POST["password"];
+                $_SESSION['dni'] = $_POST["dni"];
+                $_SESSION['telefono'] = $_POST["telefono"];
+                $_SESSION['rol'] = $_POST["rol"];
+            }
+           
+            return true;
 
         }
 

@@ -1,7 +1,6 @@
 <?php
-session_start();
-$_SESSION['nombre'] = 'Login';
-$login = $email = $pass = $dni = $code = '';
+
+$login = $email = $pass = $dni = $code = $user_type = '';
 if(isset($_SESSION['email'])) $email = $_SESSION['email'];
 if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
 if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
@@ -9,9 +8,9 @@ if(isset($_SESSION['code'])) $code = $_SESSION['code'];
 
 if(isset($_GET['log'])) {
     if($_GET['log'] == 'pa') {        
-        $_SESSION['user_type'] = 'paciente';       
+        $user_type = 'paciente';       
     } else {
-        $_SESSION['user_type'] = 'usuario';        
+        $user_type = 'usuario';        
     }
 }
 
@@ -44,7 +43,9 @@ if(isset($_POST['submit'])) {
     </script>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php include 'navbar.php'; 
+
+?>
     <div class="container d-flex justify-content-center p-5">
         <?php if(isset($_SESSION['user_type'])) { ?>
         <div id="login-box" class="col-md-6">
