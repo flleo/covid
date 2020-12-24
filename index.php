@@ -1,10 +1,7 @@
 <?php
 
 $login = $email = $pass = $dni = $code = $user_type = '';
-if(isset($_SESSION['email'])) $email = $_SESSION['email'];
-if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
-if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
-if(isset($_SESSION['code'])) $code = $_SESSION['code'];
+
 
 if(isset($_GET['log'])) {
     if($_GET['log'] == 'pa') {        
@@ -14,16 +11,7 @@ if(isset($_GET['log'])) {
     }
 }
 
-if(isset($_POST['submit'])) {
-    if(isset($_POST['email'])) {
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['password'] = $_POST['password'];
-    } else {
-        $_SESSION['dni'] = $_POST['dni'];
-        $_SESSION['code'] = $_POST['code'];
-    }
-}
-  
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -44,15 +32,29 @@ if(isset($_POST['submit'])) {
 </head>
 <body>
 <?php include 'navbar.php'; 
+if(isset($_SESSION['email'])) $email = $_SESSION['email'];
+if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
+if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
+if(isset($_SESSION['code'])) $code = $_SESSION['code'];
 
+if(isset($_POST['submit'])) {
+    if(isset($_POST['email'])) {
+        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['password'] = $_POST['password'];
+    } else {
+        $_SESSION['dni'] = $_POST['dni'];
+        $_SESSION['code'] = $_POST['code'];
+    }
+}
+  
 ?>
     <div class="container d-flex justify-content-center p-5">
-        <?php if(isset($_SESSION['user_type'])) { ?>
+     
         <div id="login-box" class="col-md-6">
             <form id="login-form" action="./data_source/validar_login.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
-                    if($_SESSION['user_type'] == 'usuario') {
+                    if($user_type == 'usuario') {
                         echo '
                     <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>
@@ -77,11 +79,11 @@ if(isset($_POST['submit'])) {
                     }
                 ?>
                 <div class="form-group">
-                    <input type="click" name="button" class="btn btn-info btn-md" value="Entrar" data-action=<?php echo $_SESSION['user_type'] ?>>
+                    <input type="click" name="button" class="btn btn-info btn-md" value="Entrar" data-action=<?php echo $user_type ?>>
                 </div>
             </form>
         </div>
-        <?php } ?>
+
     </div>
 
 
@@ -94,7 +96,7 @@ if(isset($_POST['submit'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src="./js/scripts.js" type='module'></script>
+    <script src='js/scripts.js'></script>
 </body>
 
 </html>

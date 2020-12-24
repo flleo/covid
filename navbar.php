@@ -1,6 +1,11 @@
 <?php
+
 $user = '';
 session_start();
+if(isset($_GET['out'])) {
+    session_destroy();
+    header('index.php');
+}
 if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
 if(isset($_GET['out'])) $user = ''; 
 ?>
@@ -34,7 +39,7 @@ if(isset($_GET['out'])) $user = '';
                 echo '
                 <a id="user" class="nav-link text-success" href="modificar_usuario.php">'. $user.'<span
                         class="sr-only">(current)</span></a>
-                <a class="nav-link text-secondary" href="index.php?out">Salir</a>
+                <a class="nav-link text-secondary" href="navbar.php?out">Salir</a>
                 ';
             }
             
