@@ -1,7 +1,8 @@
 <?php
-if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
-    header("Location:./index.php?error='1'");
-}
+
+    session_start();
+
+    if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') header("Location:index.php");
 
 ?>
 <!doctype html>
@@ -25,7 +26,9 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
 
 <body>
     <?php include 'navbar.php';?>
+    <input type="text" name="buscador" id="buscador" class="form-control" >
     <div class="container d-flex justify-content-center p-5">
+        
         <table id="usuarios" class="table table-hover ">
             <thead>
                 <tr>
@@ -57,7 +60,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
                 </form>
                 <?php
                 include 'data_source/listado_usuarios.php';
-                global $result;
+                $result;
                 $rows = $result->num_rows;
                     for($i=1; $i<=$rows; )
                         foreach ($result as $key) {
@@ -99,7 +102,8 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script>
+    <script src="./js/ajax.js"></script>
+<!--     <script>
     function usuarios() {
 
         $('#usuarios').show();
@@ -110,7 +114,7 @@ if (isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador') {
         $('#usuarios').hide();
         $('#pacientes').show();
     }
-    </script>
+    </script> -->
 </body>
 
 </html>

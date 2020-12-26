@@ -7,6 +7,7 @@
     if(isset($_POST['email']) &&  isset($_POST['password'])){
         $conn = Cuentas::login();
         $result = Consulta::verificarUser($conn);
+
         
 
         $num_row = $result->num_rows;
@@ -35,7 +36,7 @@
         }else{
             
             header("Location:../index.php?error='1'");
-        }
+        } 
     }
 
     // añadido José Luis

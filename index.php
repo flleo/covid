@@ -4,10 +4,11 @@ $login = $email = $pass = $dni = $code = $user_type = '';
 
 
 if(isset($_GET['log'])) {
-    if($_GET['log'] == 'pa') {        
-        $user_type = 'paciente';       
+    if($_GET['log'] == 'pa') {  
+        $user_type = 'usuario';         
+               
     } else {
-        $user_type = 'usuario';        
+        $user_type = 'paciente';   
     }
 }
 
@@ -54,7 +55,7 @@ if(isset($_POST['submit'])) {
             <form id="login-form" action="./data_source/validar_login.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
-                    if($user_type == 'usuario') {
+                    if($user_type === 'usuario') {
                         echo '
                     <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>
@@ -96,7 +97,7 @@ if(isset($_POST['submit'])) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
-    <script src='js/scripts.js'></script>
+    <script src='js/scripts.js' type='module'></script>
 </body>
 
 </html>

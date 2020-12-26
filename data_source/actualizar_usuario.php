@@ -5,7 +5,7 @@ require '../bdd/consulta.php';
 session_start();
 
 if (isset($_POST['submit'])) {   
-    $conn = Cuentas::login();
+    $conn = Cuentas::loginAdmin();
     $result = Consulta::updateUsers($conn);
     if ($result) {
         switch ($_SESSION['rol']) {
