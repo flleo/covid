@@ -56,7 +56,7 @@ if(isset($_POST['submit'])) {
             <form id="login-form" action="./data_source/validar_login.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
-                    if($_SESSION['user_type'] == 'usuario') {
+                    if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'usuario') {
                         echo '
                     <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>

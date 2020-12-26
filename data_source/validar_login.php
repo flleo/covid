@@ -43,7 +43,8 @@
     if(isset($_POST['dni']) &&  isset($_POST['code'])){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'http://192.168.0.57/vcserver/serv_pac.php?accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
+            //CURLOPT_URL => 'http://192.168.0.57/vcserver/serv_pac.php?accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
+            CURLOPT_URL => 'http://192.168.1.10/covid/serv_pac.php?accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
