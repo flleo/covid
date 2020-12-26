@@ -21,6 +21,27 @@
 
             return $conn;
         }
+
+        public static function loginPDO(){
+
+            $db = [
+                'host' => 'localhost;charset=utf8',
+                'username' => 'root',
+                'password' => '',
+                'db' => 'covid_usuario' //Cambiar al nombre de tu base de datos
+            ];
+
+            try {
+                $conn = new PDO("mysql:host={$db['host']};dbname={$db['db']}", $db['username'], $db['password']);
+      
+                // set the PDO error mode to exception
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      
+                return $conn;
+            } catch (PDOException $exception) {
+                exit($exception->getMessage());
+            }
+        }
     }
 
 ?>

@@ -41,7 +41,7 @@
                     <th scope="col">Roll</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="vista">
                 <form action="data_source/nuevo_usuario.php" method="post">
                     <tr>
                         <td>*</td>

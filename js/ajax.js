@@ -8,13 +8,11 @@ buscador.addEventListener('keyup',(e)=>{
 
     http.onreadystatechange =(data)=>{
         if(data.target.readyState ===4 && data.target.status===200){
-            const listado = document.getElementById("nuevo");
-
-            console.log(listado.nextSibling)
+            document.getElementById('vista').innerHTML = data.target.response;
         }
     }
 
-    http.open("POST","./data_source/listaAv.php", true);
+    http.open("POST","./data_source/listadoAv.php", true);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send(`buscar=${busco}`);
 })

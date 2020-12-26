@@ -77,6 +77,16 @@
 
         }
 
+        public static function listadoAv($conn,$email){
+
+            $sql = $conn->prepare('SELECT * FROM user WHERE Email LIKE :email');
+            $sql->bindValue(':email',$email);
+            $sql->execute();
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            return $sql;
+
+        } 
+
     }
 
 
