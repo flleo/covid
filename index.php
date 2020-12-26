@@ -1,15 +1,6 @@
 <?php
 
-$login = $email = $pass = $dni = $code = $user_type = '';
-
-
-if(isset($_GET['log'])) {
-    if($_GET['log'] == 'pa') {        
-        $user_type = 'paciente';       
-    } else {
-        $user_type = 'usuario';        
-    }
-}
+$login = $email = $pass = $dni = $code =  '';
 
 
 ?>
@@ -32,6 +23,17 @@ if(isset($_GET['log'])) {
 </head>
 <body>
 <?php include 'navbar.php'; 
+if(isset($_GET['out'])) {
+   session_destroy();
+}
+if(isset($_GET['log'])) {
+    if($_GET['log'] == 'pa') {        
+        $_SESSION['user_type'] = 'paciente';       
+    } else {
+        $_SESSION['user_type'] = 'usuario';        
+    }
+}
+
 if(isset($_SESSION['email'])) $email = $_SESSION['email'];
 if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
 if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
@@ -54,7 +56,7 @@ if(isset($_POST['submit'])) {
             <form id="login-form" action="./data_source/validar_login.php" method="post">
                 <h3 class="text-center text-info">Login</h3>
                 <?php
-                    if($user_type == 'usuario') {
+                    if($_SESSION['user_type'] == 'usuario') {
                         echo '
                     <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>
@@ -79,7 +81,7 @@ if(isset($_POST['submit'])) {
                     }
                 ?>
                 <div class="form-group">
-                    <input type="click" name="button" class="btn btn-info btn-md" value="Entrar" data-action=<?php echo $user_type ?>>
+                    <button type="submit" name="submit" class="btn btn-info btn-md">Entrar</button>
                 </div>
             </form>
         </div>
