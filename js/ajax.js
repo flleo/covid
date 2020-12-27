@@ -8,7 +8,8 @@ buscador.addEventListener('keyup',(e)=>{
 
     http.onreadystatechange =(data)=>{
         if(data.target.readyState ===4 && data.target.status===200){
-            document.getElementById('vista').innerHTML = data.target.response;
+            document.getElementById('listado').innerHTML=data.target.response;
+            
         }
     }
 

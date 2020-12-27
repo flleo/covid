@@ -60,7 +60,7 @@
         public static function updateUsers($conn){
 
             $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido1=?,Apellido2=?,Email=?, Contrasena=?,Roll=? WHERE ID = ?");
-            $stmt->bind_param("ssssssd",$_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["password"],$_POST["rol"],$_POST['id']); 
+            $stmt->bind_param("ssssssd",$_POST["nombre"],$_POST["apellido1"],$_POST["apellido2"],$_POST["email"],$_POST["password"],$_POST["rol"],$_POST['submit']); 
             $stmt->execute();
             if($_POST['id'] == $_SESSION['id'] ) {
                 $_SESSION['nombre'] = $_POST["nombre"];

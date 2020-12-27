@@ -27,69 +27,85 @@
 <body>
     <?php include 'navbar.php';?>
     <input type="text" name="buscador" id="buscador" class="form-control" >
-    <div class="container d-flex justify-content-center p-5">
-        
-        <table id="usuarios" class="table table-hover ">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">1º Apellido</th>
-                    <th scope="col">2º Apellido</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contraseña</th>
-                    <th scope="col">Roll</th>
-                </tr>
-            </thead>
-            <tbody id="vista">
-                <form action="data_source/nuevo_usuario.php" method="post">
-                    <tr>
-                        <td>*</td>
-                        <td><input name="nombre"></td>
-                        <td><input name="apellido1"></td>
-                        <td><input name="apellido2"></td>
-                        <td><input name="email" type="email" ></td>
-                        <td><input name="password" type="password"></td>
-                        <td><select id="select" name="rol" >
-                            <option value="Medico">Medico</option>
-                            <option value="Rastreador">Rastreador</option>
-                            <option value="Administrador">Administrador</option>
-                        </select></td>
-                        <td><button name="submit" class="btn" type="submit">Nuevo</button></td>
-                    </tr>
-                </form>
-                <?php
-                include 'data_source/listado_usuarios.php';
-                $result;
-                $rows = $result->num_rows;
-                    for($i=1; $i<=$rows; )
-                        foreach ($result as $key) {
-                            echo '
-                            <form action="data_source/actualizar_usuario.php" method="post">
-                            <tr >
-                            <th scope="row">'.$i.'</th>
-                            <td hidden><input name="id" type="number" value="'.$key['ID'].'"></td>
-                            <td ><input name="nombre" value="'.$key['Nombre'].'"></td>
-                            <td ><input name="apellido1" value="'.$key['Apellido1'].'"</td>
-                            <td ><input name="apellido2" value="'.$key['Apellido2'].'"</td>
-                            <td ><input name="email" type="email" value="'.$key['Email'].'"</td>
-                            <td ><input name="password" type="password" value="'.$key['Contrasena'].'"</td>
-                            <td><select id="select" name="rol" >
-                            <option value="'.$key['Roll'].'">'.$key['Roll'].'</option>
-                            <option value="Medico">Medico</option>
-                            <option value="Rastreador">Rastreador</option>
-                            <option value="Administrador">Administrador</option>
-                            </select></td>
-                            <td><button name="submit" class="btn" type="submit">Modificar</button></td>
-                            </tr>
-                            </form>
-                            ';
-                            $i++;
-                        }
-                ?>
-
-            </tbody>
-        </table>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-around  p-3 m-2 border-bottom">
+            <div>Nombre</div>
+            <div>1 Apellido</div>
+            <div>2 Apellido</div>
+            <div>Email</div>
+            <div>Contraseña</div>
+            <div>Roll</div>
+            <div></div>
+        </div>
+        <div>
+            <form action="data_source/nuevo_usuario.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
+                <div class="form-group">
+                    <input type="text" name='nombre'  placeholder="Enter email" id="newNombre">
+                </div>
+                <div class="form-group">
+                    <input type="text" name='apellido1'  placeholder="Enter email" id="newapellido1">
+                </div>
+                <div class="form-group">
+                    <input type="text" name='apellido2'  placeholder="Enter email" id="newApellido2">
+                </div>
+                <div class="form-group">
+                    <input type="email" name='email' placeholder="Enter email" id="newEmail">
+                </div>
+                <div class="form-group">
+                    <input type='password' name='password'  placeholder="Enter email" id="newPass">
+                </div>
+                <div class="form-group">
+                    <select id='select' name='rol' >
+                        <option value='Medico'>Medico</option>
+                        <option value='Rastreador'>Rastreador</option>
+                        <option value='Administrador'>Administrador</option>
+                    </select>
+                </div>
+                    <button name='submit' type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div id='listado'>
+        <?php
+            include 'data_source/listado_usuarios.php';
+            $rows = $result->num_rows;
+            for($i=1; $i<=$rows; )
+                foreach ($result as $key) {
+                    echo "
+                    <div class='listado'>
+                    <form action='data_source/actualizar_usuario.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
+                        <div class='form-group'>
+                            <input name='nombre' type='text' value=".$key['Nombre'].">
+                        </div>
+                        <div class='form-group'>
+                            <input name='apellido1' type='text' value=".$key['Apellido1'].">
+                        </div>
+                        <div class='form-group'>
+                            <input name='apellido2' type='text' value=".$key['Apellido2'].">
+                        </div>
+                        <div class='form-group'>
+                            <input name='email' type='text' value=".$key['Email'].">
+                        </div>
+                        <div class='form-group'>
+                            <input name='password' type='text' value=".$key['Contrasena'].">
+                        </div>
+                        <div class='form-group'>
+                            <select id='select' name='rol' >
+                                <option value=".$key['Roll'].">".$key['Roll']."</option>
+                                <option value='Medico'>Medico</option>
+                                <option value='Rastreador'>Rastreador</option>
+                                <option value='Administrador'>Administrador</option>
+                            </select>
+                        </div>
+                            <button type='submit' name='submit' value=".$key['ID']." class='btn btn-primary'>Submit</button>
+                    </form>
+                </div>
+                    
+                    ";
+                    $i++;
+                }
+        ?>
+        </div>
+       
     </div>
 
 
@@ -103,18 +119,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="./js/ajax.js"></script>
-<!--     <script>
-    function usuarios() {
-
-        $('#usuarios').show();
-        $('#pacientes').hide();
-    }
-
-    function pacientes() {
-        $('#usuarios').hide();
-        $('#pacientes').show();
-    }
-    </script> -->
 </body>
 
 </html>
