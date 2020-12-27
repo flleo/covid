@@ -3,7 +3,16 @@
 $user = '';
 
 
+
 if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
+
+
+
+if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
+if(isset($_GET['out'])) $user = ''; 
+// añadido JL
+if(isset($_SESSION['codigo_acceso'])) $user='paciente';
+
 ?>
 <!-- author: fedelleos@gmail.com -->
 
@@ -15,11 +24,20 @@ if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
         <div class="d-flex ml-auto">
             <?php if($user == '') {   
                 echo '          
-                <a class="nav-link text-info" href="index.php?log=pa">Usuarios<span
+                <a class="nav-link text-info" href="index.php?log=us">Usuarios<span
                         class="sr-only">(current)</span></a>
-                <a class="nav-link text-info" href="index.php?log=pe">Pacientes</a>               
+                <a class="nav-link text-info" href="index.php?log=pa">Pacientes</a>               
                 ';
-            } else {    
+            }
+            // añadido JL
+            elseif ($user =='paciente') {
+                echo '<a class="nav-link text-secondary" href="index.php?out">Salir<span
+                        class="sr-only">(current)</span></a>';
+                session_destroy();
+            }
+            // fin
+
+            else {    
                 switch($_SESSION['rol']) {
                     case 'Administrador': 
                         echo '          
@@ -36,6 +54,7 @@ if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
                 <a id="user" class="nav-link text-success" href="modificar_usuario.php">'. $user.'<span
                         class="sr-only">(current)</span></a>
                 <a class="nav-link text-secondary" href="./data_source/cerrarUsuario">Salir</a>
+
                 ';
             }
             

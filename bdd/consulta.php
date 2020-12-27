@@ -74,7 +74,17 @@
             }
            
             return true;
+        }
 
+        //JL
+
+        public static function userId($conn, $id){
+            $stmt = $conn->prepare("SELECT Nombre, Apellido1, Roll FROM `user` WHERE ID = ?");
+            $stmt->bind_param("s",$id); 
+            $stmt->execute();
+            $vista= $stmt->get_result();
+            $datos=$vista->fetch_assoc();
+            return $datos;
         }
 
         public static function listadoAv($conn,$email){

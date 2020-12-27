@@ -21,7 +21,7 @@ form.addEventListener('click',(e)=>{
 
             }else{
 
-                error(document.getElementById('login-box'),"Email y contraseña son invalido");
+                error(document.getElementById('login-box'),"Email y contraseña no son válidos");
             }
             
             break;

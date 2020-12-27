@@ -4,5 +4,5 @@ if(isset($_SESSION['rol']) && $_SESSION['rol'] != 'Administrador')   header("Loc
 require './bdd/config.php';
 require './bdd/consulta.php';
 
-$conn = Cuentas::login();
+$conn = Cuentas::loginAdmin();
 $result = Consulta::listado_usuarios($conn);
