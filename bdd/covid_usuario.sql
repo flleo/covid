@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`ID`, `Nombre`, `Apellido1`, `Apellido2`, `Email`, `Contrasena`, `Roll`) VALUES
 (2, 'Adrian', 'Duran', 'Gomez', 'duranadria99@gmail.com', '12345678', 'administrador'),
-(3, 'adrian', 'gomez', 'jose', 'asajsnaj@gmail.com', '87654321', 'rastreador');
+(3, 'adrian', 'gomez', 'jose', 'asajsnaj@gmail.com', '87654321', 'rastreador'),
+(4, 'Enrique', 'Montalvo', 'Lahera', 'enrique.montalvo@scs.es', 'enmo.123', 'medico');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

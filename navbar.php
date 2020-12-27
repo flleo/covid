@@ -5,6 +5,9 @@ session_start();
 
 if(isset($_SESSION['nombre'])) $user = $_SESSION['nombre'];
 if(isset($_GET['out'])) $user = ''; 
+// añadido JL
+if(isset($_SESSION['codigo_acceso'])) $user='paciente';
+
 ?>
 <!-- author: fedelleos@gmail.com -->
 
@@ -20,7 +23,16 @@ if(isset($_GET['out'])) $user = '';
                         class="sr-only">(current)</span></a>
                 <a class="nav-link text-info" href="index.php?log=pa">Pacientes</a>               
                 ';
-            } else {    
+            }
+            // añadido JL
+            elseif ($user =='paciente') {
+                echo '<a class="nav-link text-secondary" href="index.php?out">Salir<span
+                        class="sr-only">(current)</span></a>';
+                session_destroy();
+            }
+            // fin
+
+            else {    
                 switch($_SESSION['rol']) {
                     case 'Administrador': 
                         echo '          
