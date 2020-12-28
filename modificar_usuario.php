@@ -19,7 +19,10 @@
 </head>
 
 <body>
-    <?php include 'navbar.php';
+<?php
+session_start();
+
+include 'navbar.php';
 
 $id = $nombre = $apellido1 = $apellido2 = $email = $pass = $dni = $telefono = $rol = '';
 
@@ -63,76 +66,79 @@ if (isset($_SESSION['rol'])) {
 
     <div class="container d-flex justify-content-center p-5">
         <div id="login-box" class="col-md-6">
-            <form id="login-form" action="data_source/actualizar_usuario.php" method="post">
-                <h3 class="text-center text-info">Modificar Usuario</h3>
+            <form id="login-form" action="data_source/actualizar_usuario.php" method="post">    
                 <?php
                 if ($_SESSION['user_type'] == 'usuario') {
+                echo'
+                        <h3 class="text-center text-info">Modificar Usuario</h3>
+                        <div class="form-group">
+                            <label for="nombre" class="text-info">Nombre</label><br>
+                            <input type="text" name="nombre" id="nombre" class="form-control" value="' . $nombre . '" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido1" class="text-info">Apellido1</label><br>
+                            <input type="text" name="apellido1" id="apellido1" class="form-control" value="' . $apellido1 . '" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido2" class="text-info">Apellido2</label><br>
+                            <input type="text" name="apellido2" id="apellido2" class="form-control" value="' . $apellido2 . '" >
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="text-info">Email</label><br>
+                            <input type="email" name="email" id="email" class="form-control" value="' . $email . '" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-info">Password</label><br>
+                            <input type="password" name="password" id="password" class="form-control" value="' . $pass . '" required>
+                        </div>  
+                            ';
+                            if($rol == 'Administrador')
+                                echo '
+                                <div class="form-group">
+                                    <label for="roll" class="text-info">Roll</label><br>
+                                    <select id="select" name="rol" >
+                                        <option value="' . $rol . '">' . $rol . '</option>
+                                        <option value="Médico">Médico</option>
+                                        <option value="Rastreador">Rastreador</option>
+                                        <option value="Administrador">Administrador</option>
+                                    </select>
+                                </div>
+                                ';
+                    echo'
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-info btn-md" value="'. $id.'">Grabar</button>
+                    </div>
+                    ';
+                } else {
                     echo '
-                        <div class="form-group">
-                        <input type="text" name="id" class="form-control" value="' . $id . '" required hidden>
-                        </div>
-                        <div class="form-group">
-                        <label for="nombre" class="text-info">Nombre</label><br>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="' . $nombre . '" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido1" class="text-info">Apellido1</label><br>
-                        <input type="text" name="apellido1" id="apellido1" class="form-control" value="' . $apellido1 . '" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido2" class="text-info">Apellido2</label><br>
-                        <input type="text" name="apellido2" id="apellido2" class="form-control" value="' . $apellido2 . '" required>
-                        </div>
-                        <div class="form-group">
+                    <h3 class="text-center text-info">Modificar Paciente</h3>
+                    <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>
-                        <input type="email" name="email" id="email" class="form-control" value="' . $email . '" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="password" class="text-info">Password</label><br>
-                        <input type="password" name="password" id="password" class="form-control" value="' . $pass . '" required>
-                        <div class="form-group">
-                        <label for="roll" class="text-info">Roll</label><br>
-                        <select id="select" name="rol" >
-                            <option value="' . $rol . '">' . $rol . '</option>
-                            <option value="Paciente">Paciente</option>
-                            <option value="Medico">Medico</option>
-                            <option value="Rastreador">Rastreador</option>
-                            <option value="Administrador">Administrador</option>
-                        </select>
-                        </div>
-                    ';
-} else {
-    echo '
-                    <div class="form-group">
-                    <label for="dni" class="text-info">Dni</label><br>
-                    <input type="dni" name="dni" id="dni" class="form-control" value="' . $dni . '" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="email" class="text-info">Email</label><br>
-                    <input type="email" name="email" id="email" class="form-control" value="' . $email . '" required>
+                        <input type="email" name="email" id="email" class="form-control" value="' . $email . '" >
                     </div>
                     <div class="form-group">
                         <label for="nombre" class="text-info">Nombre</label><br>
                         <input type="text" name="nombre" id="nombre" class="form-control" value="' . $nombre . '" required>
-                        </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="apellido1" class="text-info">Apellido1</label><br>
                         <input type="text" name="apellido1" id="apellido1" class="form-control" value="' . $apellido1 . '" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido2" class="text-info">Apellido2</label><br>
-                        <input type="text" name="apellido2" id="apellido2" class="form-control" value="' . $apellido2 . '" required>
-                        </div>
+                    </div>
                     <div class="form-group">
-                    <label for="telefono" class="text-info">Teléfono</label><br>
-                    <input type="text" name="telefono" id="telefono" class="form-control" value="' . $telefono . '" required>
+                        <label for="apellido2" class="text-info">Apellido2</label><br>
+                        <input type="text" name="apellido2" id="apellido2" class="form-control" value="' . $apellido2 . '" >
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="text-info">Teléfono</label><br>
+                        <input type="text" name="telefono" id="telefono" class="form-control" value="' . $telefono . '" required>
+                    </div>                    
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-info btn-md" value="'. $dni,'">Grabar</button>
                     </div>
                     ';
-}
-?>
-                <div class="form-group">
-                    <input type="submit" name="submit" class="btn btn-info btn-md" value="Guardar">
-                </div>
+                }
+                ?>                
+               
             </form>
         </div>
     </div>

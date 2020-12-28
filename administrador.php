@@ -1,8 +1,10 @@
 <?php
 
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') header("Location:index.php");
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
+    header("Location: data_source/cerrarUsuario.php?error=1");
+}
 
 ?>
 <!doctype html>
@@ -40,70 +42,72 @@
         <div>
             <form action="data_source/nuevo_usuario.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
                 <div class="form-group">
-                    <input type="text" name='nombre'  placeholder="Enter email" id="newNombre">
+                    <input type="text" name='nombre'  placeholder="Enter email" id="newNombre" require>
                 </div>
                 <div class="form-group">
-                    <input type="text" name='apellido1'  placeholder="Enter email" id="newapellido1">
+                    <input type="text" name='apellido1'  placeholder="Enter email" id="newapellido1" require>
                 </div>
                 <div class="form-group">
-                    <input type="text" name='apellido2'  placeholder="Enter email" id="newApellido2">
+                    <input type="text" name='apellido2'  placeholder="Enter email" id="newApellido2" >
                 </div>
                 <div class="form-group">
-                    <input type="email" name='email' placeholder="Enter email" id="newEmail">
+                    <input type="email" name='email' placeholder="Enter email" id="newEmail" require>
                 </div>
                 <div class="form-group">
-                    <input type='password' name='password'  placeholder="Enter email" id="newPass">
+                    <input type='password' name='password'  placeholder="Enter email" id="newPass" require>
                 </div>
                 <div class="form-group">
-                    <select id='select' name='rol' >
-                        <option value='Medico'>Medico</option>
+                    <select id='select' name='rol' require>
+                        <option value='Medico'>Médico</option>
                         <option value='Rastreador'>Rastreador</option>
                         <option value='Administrador'>Administrador</option>
                     </select>
                 </div>
-                    <button name='submit' type="submit" class="btn btn-primary">Submit</button>
+                    <button name='submit' type="submit" class="btn btn-success col-1">Nuevo</button>
             </form>
         </div>
         <div id='listado'>
         <?php
-            include 'data_source/listado_usuarios.php';
-            $rows = $result->num_rows;
-            for($i=1; $i<=$rows; )
-                foreach ($result as $key) {
-                    echo "
+include 'data_source/listado_usuarios.php';
+$rows = $result->num_rows;
+for ($i = 1; $i <= $rows;) {
+    foreach ($result as $key) {
+        echo "
                     <div class='listado'>
-                    <form action='data_source/actualizar_usuario.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
+                    <form action='data_source/actualizar_usuarios.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
                         <div class='form-group'>
-                            <input name='nombre' type='text' value=".$key['Nombre'].">
+                            <input name='nombre' type='text' value=" . $key['Nombre'] . " require >
                         </div>
                         <div class='form-group'>
-                            <input name='apellido1' type='text' value=".$key['Apellido1'].">
+                            <input name='apellido1' type='text' value=" . $key['Apellido_1'] . " require>
                         </div>
                         <div class='form-group'>
-                            <input name='apellido2' type='text' value=".$key['Apellido2'].">
+                            <input name='apellido2' type='text' value=" . $key['Apellido_2'] . " >
                         </div>
                         <div class='form-group'>
-                            <input name='email' type='text' value=".$key['Email'].">
+                            <input name='email' type='text' value=" . $key['Email'] . " >
                         </div>
                         <div class='form-group'>
-                            <input name='password' type='text' value=".$key['Contrasena'].">
+                            <input name='password' type='password' value=" . $key['Contrasena'] . " require>
                         </div>
                         <div class='form-group'>
-                            <select id='select' name='rol' >
-                                <option value=".$key['Roll'].">".$key['Roll']."</option>
-                                <option value='Medico'>Medico</option>
+                            <select id='select' name='rol' require>
+                                <option value=" . $key['Roll'] . ">" . $key['Roll'] . "</option>
+                                <option value='Médico'>Medico</option>
                                 <option value='Rastreador'>Rastreador</option>
                                 <option value='Administrador'>Administrador</option>
                             </select>
                         </div>
-                            <button type='submit' name='submit' value=".$key['ID']." class='btn btn-primary'>Submit</button>
+                            <button type='submit' name='submit' value=" . $key['ID'] . " class='btn btn-primary col-1'>Modificar</button>
                     </form>
                 </div>
-                    
+
                     ";
-                    $i++;
-                }
-        ?>
+        $i++;
+    }
+}
+
+?>
         </div>
     </div>
 

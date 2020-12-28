@@ -3,6 +3,10 @@
     session_start();
     session_destroy();
 
-    header("Location:../index.php");
+ 
+    if(isset($_GET['error']))
+        header("Location:../index.php?error=".$_GET['error']);
+    else 
+        header("Location:../index.php");
 
 ?>

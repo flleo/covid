@@ -1,6 +1,7 @@
 <?php
 session_start();
-require 'config/config.php';
+if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'paciente') header("Location: data_source/cerrarUsuario.php?error=1");
+require 'bddsx/config.php';
 require('bdd/config.php');
 require('bdd/consulta.php');
 if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
@@ -20,7 +21,7 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
     $response = json_decode(curl_exec($curl),true);
     curl_close($curl);
 
-
+}
 
 ?>
 
@@ -43,30 +44,28 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 	</head>
 	<body>
 	<?php include 'navbar.php'; 
-	 
 	?>
 	    <div class="container d-flex flex-column justify-content-center p-5">
-	     	<div class="container p-3 my-3 bg-dark text-white" id="datos_paciente">
+	     	<div class="row-1 p-3 my-3 bg-info text-white" id="datos_paciente">
 	     		<?php
-	     			echo 'Nombre: '.$_SESSION['nombre']." ".$_SESSION['apellido_1']." ".$_SESSION['apellido_2']."<br>";
-	     			echo 'Estado actual: <b>'.$_SESSION['estado'].'</b>';
+	     			echo '<h6>Nombre: '.$_SESSION['nombre']." ".$_SESSION['apellido1']." ". $_SESSION['apellido2']."</h6><br>".
+	     			 	'<h6>Estado actual: <b>'.$_SESSION['estado'].'</b></h6>';
 	     		?>	
 	     	</div>
-	     	<div class="container d-flex flex-column ">
+	     	<div class="row d-flex flex-column ">
 	     		<?php 
 	     			for ($i=0; $i<count($response);$i++) {
 	     				// cosulta de los usuarios
 	     				$conn = Cuentas::login();
 						$result = Consulta::userId($conn,$response[$i]['id_usuario']);
-						if ($result['Roll']=='rastreador') {$rol="Rastreador: ";}
-						elseif ($result['Roll']=='medico') {$rol="Profesional Sanitario: ";}
-
-
+						if ($result['Roll']=='Rastreador') {$rol="Rastreador: ";}
+						elseif ($result['Roll']=='Médico') {$rol="Profesional Sanitario: ";}
 
 	     				$salida= '<div class="border p-3 my-3">';
-			     		$salida.= '<div class="row" style="background-color:lightblue;"> <div class="col-sm-8 p-2">';
-			     		$salida.=$rol.$result['Nombre']." ".$result['Apellido1'];
-			     		$salida.='</div> <div class="col-sm-4 text-right font-weight-bold" style="background-color:lightblue;">';
+						 $salida.= '<div class="row table-info" > <div class="col-sm-8 p-2">';
+						if(isset($rol))
+			     			$salida.=$rol.$result['Nombre']." ".$result['Apellido_1'];
+			     		$salida.='</div> <div class="col-sm-4 text-right font-weight-bold table-info">';
 			     		$salida.=$response[$i]['fecha'];
 			     		$salida.='</div> </div>';
 
@@ -94,17 +93,4 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 	    </script>
 	</body>
 
-	</html>
-
-<?php 
-}
-// else {
-	// header("Location:./index.php?error='1'");  	
-// }
-
- ?>
-
-
-
-
-
+</html>

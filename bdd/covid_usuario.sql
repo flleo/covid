@@ -31,8 +31,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(30) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `Apellido1` varchar(30) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `Apellido2` varchar(30) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `Apellido_1` varchar(30) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `Apellido_2` varchar(30) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `Email` varchar(60) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `Contrasena` varchar(8) COLLATE utf8mb4_spanish2_ci NOT NULL,
   `Roll` varchar(13) COLLATE utf8mb4_spanish2_ci NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`ID`, `Nombre`, `Apellido1`, `Apellido2`, `Email`, `Contrasena`, `Roll`) VALUES
+INSERT INTO `user` (`ID`, `Nombre`, `Apellido_1`, `Apellido_2`, `Email`, `Contrasena`, `Roll`) VALUES
 (2, 'Adrian', 'Duran', 'Gomez', 'duranadria99@gmail.com', '12345678', 'administrador'),
 (3, 'adrian', 'gomez', 'jose', 'asajsnaj@gmail.com', '87654321', 'rastreador'),
 (4, 'Enrique', 'Montalvo', 'Lahera', 'enrique.montalvo@scs.es', 'enmo.123', 'medico');

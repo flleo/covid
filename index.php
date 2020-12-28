@@ -1,19 +1,6 @@
 <?php
 
 session_start();
-$login = $email = $pass = $dni = $code = $user_type = '';
-
-
-if(isset($_GET['log'])) {
-    if($_GET['log'] == 'pa') {  
-        $user_type = 'usuario';         
-               
-    } else {
-        $user_type = 'paciente';   
-    }
-}
-
-
 
 ?>
 <!doctype html>
@@ -35,9 +22,7 @@ if(isset($_GET['log'])) {
 </head>
 <body>
 <?php include 'navbar.php'; 
-if(isset($_GET['out'])) {
-   session_destroy();
-}
+
 if(isset($_GET['log'])) {
     if($_GET['log'] == 'pa') {        
         $_SESSION['user_type'] = 'paciente';       
@@ -46,20 +31,6 @@ if(isset($_GET['log'])) {
     }
 }
 
-if(isset($_SESSION['email'])) $email = $_SESSION['email'];
-if(isset($_SESSION['password'])) $pass = $_SESSION['password'];
-if(isset($_SESSION['dni'])) $dni = $_SESSION['dni'];
-if(isset($_SESSION['code'])) $code = $_SESSION['code'];
-
-if(isset($_POST['submit'])) {
-    if(isset($_POST['email'])) {
-        $_SESSION['email'] = $_POST['email'];
-        $_SESSION['password'] = $_POST['password'];
-    } else {
-        $_SESSION['dni'] = $_POST['dni'];
-        $_SESSION['code'] = $_POST['code'];
-    }
-}
   
 ?>
     <div class="container d-flex justify-content-center p-5">
@@ -74,22 +45,22 @@ if(isset($_POST['submit'])) {
                         echo '
                     <div class="form-group">
                         <label for="email" class="text-info">Email</label><br>
-                        <input type="email" name="email" id="email" class="form-control" value="'.$email.'" required>
+                        <input type="email" name="email" id="email" class="form-control"  required>
                     </div>
                     <div class="form-group">
                         <label for="password" class="text-info">Password:</label><br>
-                        <input type="password" name="password" id="password" class="form-control" value="'.$pass.'" required>
+                        <input type="password" name="password" id="password" class="form-control"  required>
                     </div>
                     ';
                     }  else {
                         echo '
                     <div class="form-group">
                         <label for="dni" class="text-info">Dni</label><br>
-                        <input type="dni" name="dni" id="dni" class="form-control" value="'.$dni .'" required>
+                        <input type="dni" name="dni" id="dni" class="form-control"  required>
                     </div>
                     <div class="form-group">
                         <label for="code" class="text-info">Código de acceso</label><br>
-                        <input type="text" name="code" id="code" class="form-control" value="'.$code.'" required>
+                        <input type="text" name="code" id="code" class="form-control"  required>
                     </div>
                     ';
                     }

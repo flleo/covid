@@ -1,45 +1,42 @@
 <?php
+    session_start();
     // Jose Luis
-    require '../config/config.php';
+    require '../bddsx/config.php';
 
 
     /* Autor adrian */
     require('../bdd/config.php');
     require('../bdd/consulta.php');
-    session_start();
+
 
     if(isset($_POST['email']) &&  isset($_POST['password'])){
         $conn = Cuentas::login();
         $result = Consulta::verificarUser($conn);
-
-        
-
+   
         $num_row = $result->num_rows;
 
         if($num_row ===1){
 
             foreach ($result as $key) {
-               
                 $_SESSION['id'] = $key['ID'];
                 $_SESSION['rol'] = $key['Roll'];               
                 $_SESSION['nombre'] = $key['Nombre']; 
-                $_SESSION['apellido1'] = $key['Apellido1'] ;
-                $_SESSION['apellido2'] = $key['Apellido2'];
+                $_SESSION['apellido1'] = $key['Apellido_1'] ;
+                $_SESSION['apellido2'] = $key['Apellido_2'];
                 $_SESSION['email'] = $key['Email'];
                 $_SESSION['password'] = $key['Contrasena'];
-             
+            
                 switch($_SESSION['rol']) {
                     case 'Administrador':   header("Location:../administrador.php");break;
                     case 'Rastreador':      header("Location:../rastreador.php");break;
-                    case 'Medico':          header("Location:../medico.php");break;
-                    case 'Paciente':        header("Location:../paciente.php");break;
+                    case 'Médico':          header("Location:../medico.php");break;
                 }
                 
             }
 
         }else{
             
-            header("Location:../index.php?error='1'");
+            header("Location: cerrarUsuario.php?error=1");
         } 
     }
 
@@ -63,12 +60,15 @@
 
         if (count($response)===1) {
             print_r($response[0]);
+            $_SESSION['user_type'] = 'paciente';
             $_SESSION['dni'] = $_POST['dni']; 
             $_SESSION['codigo_acceso'] = $_POST['code'];
-            $_SESSION['estado'] = $response[0]['estado'];
+            $_SESSION['email'] = $response[0]['email'];            
             $_SESSION['nombre'] = $response[0]['nombre']; 
-            $_SESSION['apellido_1'] = $response[0]['apellido_1'] ;
-            $_SESSION['apellido_2'] = $response[0]['apellido_2'];
+            $_SESSION['apellido1'] = $response[0]['apellido_1'] ;
+            $_SESSION['apellido2'] = $response[0]['apellido_2'];
+            $_SESSION['telefono'] = $response[0]['telefono'];
+            $_SESSION['estado'] = $response[0]['estado'];
             header("Location:../paciente.php");
         }
         

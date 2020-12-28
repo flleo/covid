@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     if ($result) {
        header("Location:../administrador.php");              
     } else {
-        header("Location:../index.php?error='1'");
+        header("Location:cerrarUsuario.php?error='1'");
     }
 }
 
