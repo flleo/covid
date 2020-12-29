@@ -49,7 +49,9 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 	     	<div class="row-1 p-3 my-3 bg-info text-white" id="datos_paciente">
 	     		<?php
 	     			echo '<h6>Nombre: '.$_SESSION['nombre']." ".$_SESSION['apellido1']." ". $_SESSION['apellido2']."</h6><br>".
-	     			 	'<h6>Estado actual: <b>'.$_SESSION['estado'].'</b></h6>';
+						  '<h6>Estado actual: <b>'.$_SESSION['estado'].'</b></h6>';
+						  
+						 
 	     		?>	
 	     	</div>
 	     	<div class="row d-flex flex-column ">
@@ -72,7 +74,9 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 			     		$salida.='<div class="m-1">';
 			     		$salida.=$response[$i]['nota'];
 			     		$salida.='</div> </div>';
-			     		echo $salida;
+						 echo $salida;
+						 
+				
 			     	}
 
 		     	?>
