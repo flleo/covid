@@ -86,15 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
                 // Devuelve una lista de todos los pacientes que cumplan esa condición con DNI, codigo acceso, nombre, apellido, apellido_2, email, teléfono, estado
                 $estados=array();
                 $secuencia="SELECT * FROM paciente WHERE";
-                if ($_GET['contagiado']) {array_push($estados," estado='contagiado'");}
-                if ($_GET['curado']) {array_push($estados, " estado='curado'");}
-                if ($_GET['fallecido']) {array_push($estados, " estado='fallecido'");}
+                if ($_GET['contagiado'] ) {array_push($estados," estado='Contagiado'");}
+                if ($_GET['asintomatico']) {array_push($estados, " estado='Asintomático'");}
+                if ($_GET['recuperado'] != '') {array_push($estados, " estado='Recuperado'");}
+                if ($_GET['fallecido']) {array_push($estados, " estado='Fallecido'");}
 
                 for ($i=0; $i<count($estados);$i++) {
                     $secuencia.= $estados[$i]." OR";
                 }
 
-                $secuencia=substr($secuencia,0,strlen($secuencia)-3)." ORDER BY apellido_1 ASC, apellido_2 ASC;";
+                $secuencia=substr($secuencia,0,strlen($secuencia)-4)." ORDER BY apellido_1 ASC, apellido_2 ASC;";
 
                 $sql = $dbConn->prepare($secuencia);
                 $sql->execute();

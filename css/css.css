@@ -4,6 +4,7 @@
     height: 50px;
 }
 
-input {
+input, button {
     font-size: small !important;
 }
+
