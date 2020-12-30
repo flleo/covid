@@ -92,7 +92,7 @@ if (isset($_SESSION['rol'])) {
                             <input type="password" name="password" id="password" class="form-control" value="' . $pass . '" required>
                         </div>  
                             ';
-                            if($rol == 'Administrador')
+                            if($rol == 'Administrador' && $email != $_SESSION['email'])
                                 echo '
                                 <div class="form-group">
                                     <label for="roll" class="text-info">Roll</label><br>

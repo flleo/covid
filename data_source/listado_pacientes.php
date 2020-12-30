@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
+if (!isset($_SESSION['rol']))  {
     header("Location: data_source/cerrarUsuario.php?error=1");
 }
 include '../bddsx/config.php';
@@ -19,10 +19,13 @@ curl_setopt_array($curl, array(
 
 $response = curl_exec($curl);
 curl_close($curl);
-if ($response != null) {
-    header("Location:../administrador.php?pacientes=".$response);
-} else {
-    
-}
+$location='';
+switch($_SESSION['rol']) {
+    case 'Médico': $location = 'medico.php';break;
+    case 'Rastreador': $location = 'rastreador.php'; break;
+    case 'Administrador': $location = 'administrador.php'; break;
+}   
+header("Location:../".$location."?pacientes=".$response);
+
 
 ?>

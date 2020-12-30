@@ -28,101 +28,97 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
 
 <body>
     <?php include 'navbar.php';?>
-    <div class="container ">
-        <div class="row d-flex align-items-center row-1">
-            <label for="buscador">Busqueda por 1er apellido: </label>
-            <input type="text" name="buscador" id="buscador" class="form-control m-4 col-2">
-        </div>
-        <!-- Usuarios -->
-        <div id="usuarios" class="row-fluid">
-            <div class="h3 text-center">Listado de Usuarios</div>
-            <div class="d-flex justify-content-around  p-3 m-2 border-bottom">
-                <div>Nombre</div>
-                <div>1 Apellido</div>
-                <div>2 Apellido</div>
-                <div>Email</div>
-                <div>Contraseña</div>
-                <div>Roll</div>
-                <div></div>
+    <div class="container d-flex flex-column justify-content-start p-5 mx-2">
+            <div class="row d-flex align-items-center row-1 ml-5">
+                <label for="buscador">Busqueda por 1er apellido: </label>
+                <input type="text" name="buscador" id="buscador" class="form-control m-4 col-2">
             </div>
-            <div>
-                <form action="data_source/nuevo_usuario.php" class="d-flex justify-content-around p-3 m-2 border-bottom"
-                    method="post">
-                    <div class="form-group">
-                        <input type="text" name='nombre' placeholder="Enter email" id="newNombre" require>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name='apellido1' placeholder="Enter email" id="newapellido1" require>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name='apellido2' placeholder="Enter email" id="newApellido2">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name='email' placeholder="Enter email" id="newEmail" require>
-                    </div>
-                    <div class="form-group">
-                        <input type='password' name='password' placeholder="Enter email" id="newPass" require>
-                    </div>
-                    <div class="form-group">
-                        <select id='select' name='rol' require>
-                            <option value='Medico'>Médico</option>
-                            <option value='Rastreador'>Rastreador</option>
-                            <option value='Administrador'>Administrador</option>
-                        </select>
-                    </div>
-                    <button name='submit' type="submit" class="btn btn-success col-1">Nuevo</button>
-                </form>
-            </div>
+            <!-- Usuarios -->
+            <div id="usuarios" class="row-flex ml-5  col-12">
+                <div class="h3 text-center">Listado de Usuarios</div>
+                <div class="d-flex justify-content-around  p-3 m-2 border-bottom">
+                    <div>Nombre</div>
+                    <div>1 Apellido</div>
+                    <div>2 Apellido</div>
+                    <div>Email</div>
+                    <div>Contraseña</div>
+                    <div>Roll</div>
+                    <div></div>
+                </div>
+                <div>
+                    <form action="data_source/nuevo_usuario.php" class="d-flex justify-content-around p-3 m-2 border-bottom"
+                        method="post">
+                        <div class="form-group">
+                            <input type="text" name='nombre' placeholder="Enter email" id="newNombre" require>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name='apellido1' placeholder="Enter email" id="newapellido1" require>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name='apellido2' placeholder="Enter email" id="newApellido2">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name='email' placeholder="Enter email" id="newEmail" require>
+                        </div>
+                        <div class="form-group">
+                            <input type='password' name='password' placeholder="Enter email" id="newPass" require>
+                        </div>
+                        <div class="form-group">
+                            <select id='select' name='rol' require>
+                                <option value='Medico'>Médico</option>
+                                <option value='Rastreador'>Rastreador</option>
+                                <option value='Administrador'>Administrador</option>
+                            </select>
+                        </div>
+                        <button name='submit' type="submit" class="btn btn-success col-1">Nuevo</button>
+                    </form>
+                </div>
 
-            <?php
+                <?php
 
-include ('data_source/listado_usuarios.php');
+include 'data_source/listado_usuarios.php';
 
 $rows = $result->num_rows;
 for ($i = 1; $i <= $rows;) {
     foreach ($result as $key) {
-            echo "   <div id='listado'>
-                        <div class='listado'>
-                            <form action='data_source/actualizar_usuarios.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
+?>
+                    <div id='listado'>
+                        <form action='data_source/actualizar_usuarios.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
+                            <div class='form-group'>
+                                <input name='nombre' type='text' value=" <?php echo $key['Nombre'] ?> " require >
+                            </div>
                                 <div class='form-group'>
-                                    <input name='nombre' type='text' value=" . $key['Nombre'] . " require >
+                                    <input name='apellido1' type='text' value=" <?php echo $key['Apellido_1']?>  " require>
                                 </div>
                                 <div class='form-group'>
-                                    <input name='apellido1' type='text' value=" . $key['Apellido_1'] . " require>
+                                    <input name='apellido2' type='text' value="  <?php echo $key['Apellido_2']?>  " >
                                 </div>
                                 <div class='form-group'>
-                                    <input name='apellido2' type='text' value=" . $key['Apellido_2'] . " >
+                                    <input name='email' type='text' value="  <?php echo $key['Email']?>  " >
                                 </div>
                                 <div class='form-group'>
-                                    <input name='email' type='text' value=" . $key['Email'] . " >
-                                </div>
-                                <div class='form-group'>
-                                    <input name='password' type='password' value=" . $key['Contrasena'] . " require>
+                                    <input name='password' type='password' value="   <?php echo $key['Contrasena']?>  " require>
                                 </div>
                                 <div class='form-group'>
                                     <select id='select' name='rol' require>
-                                        <option value=" . $key['Roll'] . ">" . $key['Roll'] . "</option>
+                                        <option value="  <?php echo $key['Roll'] ?> ">"   <?php echo $key['Roll']?>  "</option>
                                         <option value='Médico'>Medico</option>
                                         <option value='Rastreador'>Rastreador</option>
                                         <option value='Administrador'>Administrador</option>
                                     </select>
                                 </div>
-                                <button type='submit' name='submit' value=" . $key['ID'] . " class='btn btn-primary col-1'>Modificar</button>
-                            </form>
-                        </div>
+                                <button type='submit' name='submit' value="   <?php echo $key['ID']?>  " class='btn btn-primary col-1'>Modificar</button>    
+                        </form>                         
                     </div>
-                        ";
-            $i++;
+<?php
+        $i++;
     }
 }
-
-     echo'
-        </div>
-    '; 
-    // Pacientes
 ?>
-            <div id="pacientes" class="row-flex" style="display:none;">
-                <!-- Hay que ocultarlo para que no salga de comienzo-->
+            </div>
+  
+            <!-- Pacientes . Hay que ocultarlo para que no salga de comienzo-->
+            <div id="pacientes" class="row-flex " style="display:none;">            
                 <div class="h3 text-center">Listado de Pacientes</div>
                 <form action="data_source/listado_pacientes.php" method="post" class="mt-5">
                     <input name="contagiado" type="checkbox" class="mr-2"> Contagiados
@@ -185,63 +181,63 @@ for ($i = 1; $i <= $rows;) {
                                         class="btn btn-success ">Nuevo</button></td>
                             </form>
                         </tr>
+                  
                         <?php
 
-    if(isset($_GET['pacientes'])) {
-        $response = $_GET['pacientes'];
-        $rows = $response->num_rows;
-        for ($i = 1; $i <= $rows;) {
+if (isset($_GET['pacientes'])) {
+    $response = $_GET['pacientes'];
+    $rows = $response->num_rows;
+    for ($i = 1; $i <= $rows;) {
         foreach ($response as $key) {
-            echo '   
-                        <tr id="listado" class="listado">
-                            <form action="data_source/actualizar_usuarios.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
+                        ?>
+                    <tr id="listado" class="listado">
+                        <form action="data_source/actualizar_pacientes.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
                             <td class="form-group">
-                                <input type="text" name="dni"  placeholder="Enter dni"  value="' . $key['dni'] .' " require >
+                                <input type="text" name="dni"  placeholder="Enter dni"  value="<?php echo $key['dni'] ?> " require >
                             </td>
                             <td class="form-group">
                                 <input type="text" name="codigo_acceso" value=" '. $key['codigo_acceso'] . '" require >
                             </td>
                             <td class="form-group">
-                                <input type="email" name="email" placeholder="Enter email"  value="' . $key['email'] .' " >
+                                <input type="email" name="email" placeholder="Enter email"  value="<?php echo $key['email'] ?> " >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="nombre" placeholder="Enter name"  value="' . $key['Nombre'] .' " require >
+                                <input type="text" name="nombre" placeholder="Enter name"  value="<?php echo $key['Nombre'] ?> " require >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="apellido1"  placeholder="Enter 1er apellido" value="' . $key['apellido_1'] .' " require >
+                                <input type="text" name="apellido1"  placeholder="Enter 1er apellido" value="<?php echo $key['apellido_1'] ?> " require >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="apellido2"  placeholder="Enter 2º apellido" value="' . $key['apellido_2'] .' "  >
-                            </td>                   
-                            <td class="form-group">
-                                <input type="text" name="telefono"  placeholder="Enter telefono"  value="' . $key['telefono'] .' " require >
+                                <input type="text" name="apellido2"  placeholder="Enter 2º apellido" value="<?php echo $key['apellido_2'] ?> "  >
                             </td>
                             <td class="form-group">
-                                <select id="select" name="estado" value="' . $key['estado'] .' " require >
+                                <input type="text" name="telefono"  placeholder="Enter telefono"  value="<?php echo $key['telefono'] ?> " require >
+                            </td>
+                            <td class="form-group">
+                                <select id="select" name="estado" value="<?php echo $key['estado'] ?> " require >
                                     <option value="Contagiado">Contagiado</option>
                                     <option value="Asintomático">Asintomático</option>
                                     <option value="Recuperado">Recuperado</option>
                                     <option value="Fallecido">Fallecido</option>
                                 </select>
                             </td>
-                            <td><button type="submit" name="submit" value="' . $key['dni'] .' " class="btn btn-primary col-1">Modificar</button><td>
-                            </form>
-                        </tr>
+                            <td><button type="submit" name="submit" value="<?php echo $key['dni'] ?> " class="btn btn-primary col-1">Modificar</button><td>
+                        </form>
+                    </tr>
                 </tbody>
-            </table>
-                        ';
-            $i++;
+            </table>           
+<?php
+$i++;
         }
-        }
-    }                    
-       
+    }
+}
 
-    echo'
-        </div>
-'; 
 ?>
 
-            </div>
+        </div>
+
+    </div>
+
 
 
 

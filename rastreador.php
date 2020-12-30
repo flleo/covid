@@ -1,6 +1,8 @@
 <?php
 session_start();
-if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') header("Location: data_source/cerrarUsuario.php?error=1");
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') {
+    header("Location: data_source/cerrarUsuario.php?error=1");
+}
 
 ?>
 
@@ -12,7 +14,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') header("Locati
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="fedelleos@gmail.com" />  
+    <meta name="author" content="fedelleos@gmail.com" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,72 +22,128 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') header("Locati
     <link rel="stylesheet" href="css/css.css">
 </head>
 <body>
-<?php include 'navbar.php'; ?>
+<?php include 'navbar.php';?>
     <div class="container d-flex justify-content-center p-5">
-        <div id="login-box" class="col-md-6">
-            <form id="login-form" action="" method="post">
-                <h3 class="text-center text-info">Pacientes</h3>
-                <?php
-                /*
-                    if($_SESSION['user_type'] == 'usuario') {
-                        echo '
-                        <div class="form-group">
-                        <label for="nombre" class="text-info">Nombre</label><br>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="'.$nombre.'" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido1" class="text-info">Apellido1</label><br>
-                        <input type="text" name="apellido1" id="apellido1" class="form-control" value="'.$apellido1.'" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido2" class="text-info">Apellido2</label><br>
-                        <input type="text" name="apellido2" id="apellido2" class="form-control" value="'.$apellido2.'" required>
-                        </div>
-                    <div class="form-group">
-                    <label for="email" class="text-info">Email</label><br>
-                    <input type="email" name="email" id="email" class="form-control" value="'.$email.'" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="password" class="text-info">Password</label><br>
-                    <input type="text" name="password" id="password" class="form-control" value="'.$pass.'" required>
-                    </div>
-                    ';
-                    }  else {
-                        echo '
-                    <div class="form-group">
-                    <label for="dni" class="text-info">Dni</label><br>
-                    <input type="dni" name="dni" id="dni" class="form-control" value="'.$dni .'" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="email" class="text-info">Email</label><br>
-                    <input type="email" name="email" id="email" class="form-control" value="'.$email.'" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre" class="text-info">Nombre</label><br>
-                        <input type="text" name="nombre" id="nombre" class="form-control" value="'.$nombre.'" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido1" class="text-info">Apellido1</label><br>
-                        <input type="text" name="apellido1" id="apellido1" class="form-control" value="'.$apellido1.'" required>
-                        </div>
-                        <div class="form-group">
-                        <label for="apellido2" class="text-info">Apellido2</label><br>
-                        <input type="text" name="apellido2" id="apellido2" class="form-control" value="'.$apellido2.'" required>
-                        </div>
-                    <div class="form-group">
-                    <label for="telefono" class="text-info">Teléfono</label><br>
-                    <input type="text" name="telefono" id="telefono" class="form-control" value="'.$telefono.'" required>
-                    </div>
-                    ';
-                    }
-                    */
-                ?>
-                <div class="form-group">
-                    <input type="submit" name="submit" class="btn btn-info btn-md" value="Grabar">
-                </div>
+        <div class="row-flex" >
+                <div class="h3 text-center">Listado de Pacientes</div>
+                <form action="data_source/listado_pacientes.php" method="post" class="mt-5">
+                    <input name="contagiado" type="checkbox" class="mr-2"> Contagiados
+                    <input name="asintomatico" type="checkbox" class="m-2"> Asintomáticos
+                    <input name="recuperado" type="checkbox" class="m-2"> Curados
+                    <input name="fallecido" type="checkbox" class="m-2"> Fallecidos
+                    <button name="submit" type="submit" class="btn  border-primary ml-2 ">Listar</button>
+                </form>
+                <table class="table">
+                    <thread id="pacientes_enunciado" class="d-flex justify-content-around  p-3 m-2 border-bottom">
+                        <tr>
+                            <th>Dni</th>
+                            <th>Código de Acceso</th>
+                            <th>Email</th>
+                            <th>Nombre</th>
+                            <th>1er Apellido</th>
+                            <th>2º Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                            <th> </th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        <tr>
+                            <form action="data_source/nuevo_paciente.php"
+                                class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
+                                <td class="form-group">
+                                    <input type="text" name='dni' placeholder="Enter dni" id="newDni" require>
+                                </td>
+                                <td class="form-group">
+                                    <input type='text' disabled>
+                                </td>
+                                <td class="form-group">
+                                    <input type="email" name='email' placeholder="Enter email" id="newEmail">
+                                </td>
+                                <td class="form-group">
+                                    <input type="text" name='nombre' placeholder="Enter name" id="newNombre" require>
+                                </td>
+                                <td class="form-group">
+                                    <input type="text" name='apellido1' placeholder="Enter 1er apellido"
+                                        id="newapellido1" require>
+                                </td>
+                                <td class="form-group">
+                                    <input type="text" name='apellido2' placeholder="Enter 2º apellido"
+                                        id="newApellido2">
+                                </td>
+                                <td class="form-group">
+                                    <input type='text' name='telefono' placeholder="Enter telefono" id="newTelefono"
+                                        require>
+                                </td>
+                                <td class="form-group">
+                                    <select id='select' name='estado' require>
+                                        <option value='Contagiado'>Contagiado</option>
+                                        <option value='Asintomático'>Asintomático</option>
+                                        <option value='Recuperado'>Recuperado</option>
+                                        <option value='Fallecido'>Fallecido</option>
+                                    </select>
+                                </td>
+                                <td><button name='submit' type="submit" role="button"
+                                        class="btn btn-success ">Nuevo</button></td>
+                            </form>
+                        </tr>
+<?php
+
+if (isset($_GET['pacientes'])) {
+    $response = $_GET['pacientes'];
+    $rows = $response->num_rows;
+    for ($i = 1; $i <= $rows;) {
+        foreach ($response as $key) {
+            ?>
+            <tr id="listado" class="listado">
+            <form action="data_source/actualizar_pacientes.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
+            <td class="form-group">
+                <input type="text" name="dni"  placeholder="Enter dni"  value="<?php echo $key['dni'] ?> " require >
+            </td>
+            <td class="form-group">
+                <input type="text" name="codigo_acceso" value=" '. $key['codigo_acceso'] . '" require >
+            </td>
+            <td class="form-group">
+                <input type="email" name="email" placeholder="Enter email"  value="<?php echo $key['email'] ?> " >
+            </td>
+            <td class="form-group">
+                <input type="text" name="nombre" placeholder="Enter name"  value="<?php echo $key['Nombre'] ?> " require >
+            </td>
+            <td class="form-group">
+                <input type="text" name="apellido1"  placeholder="Enter 1er apellido" value="<?php echo $key['apellido_1'] ?> " require >
+            </td>
+            <td class="form-group">
+                <input type="text" name="apellido2"  placeholder="Enter 2º apellido" value="<?php echo $key['apellido_2'] ?> "  >
+            </td>
+            <td class="form-group">
+                <input type="text" name="telefono"  placeholder="Enter telefono"  value="<?php echo $key['telefono'] ?> " require >
+            </td>
+            <td class="form-group">
+                <select id="select" name="estado" value="<?php echo $key['estado'] ?> " require >
+                    <option value="Contagiado">Contagiado</option>
+                    <option value="Asintomático">Asintomático</option>
+                    <option value="Recuperado">Recuperado</option>
+                    <option value="Fallecido">Fallecido</option>
+                </select>
+            </td>
+            <td><button type="submit" name="submit" value="<?php echo $key['dni'] ?> " class="btn btn-primary col-1">Modificar</button><td>
             </form>
+        </tr>
+                </tbody>
+            </table>
+<?php
+$i++;
+        }
+    }
+}
+?>
+
         </div>
+
+
+
     </div>
+
 
 
     <!-- Optional JavaScript -->
