@@ -48,11 +48,9 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 	    <div class="container d-flex flex-column justify-content-center p-5">
 	     	<div class="row-1 p-3 my-3 bg-info text-white" id="datos_paciente">
 	     		<?php
-	     			echo '<h6>Nombre: '.$_SESSION['nombre']." ".$_SESSION['apellido1']." ". $_SESSION['apellido2']."</h6><br>".
+	     			echo '<h6>Nombre: '.$_SESSION['nombre']." ".$_SESSION['apellido_1']." ". $_SESSION['apellido_2']."</h6><br>".
 						  '<h6>Estado actual: <b>'.$_SESSION['estado'].'</b></h6>';
-						  
-						 
-	     		?>	
+	    		?>	
 	     	</div>
 	     	<div class="row d-flex flex-column ">
 	     		<?php 
@@ -74,19 +72,14 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 			     		$salida.='<div class="m-1">';
 			     		$salida.=$response[$i]['nota'];
 			     		$salida.='</div> </div>';
-						 echo $salida;
-						 
-				
+						echo $salida;
+
 			     	}
 
 		     	?>
 		    </div>
-
-
 	    </div>
-
-
-	   
+   
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

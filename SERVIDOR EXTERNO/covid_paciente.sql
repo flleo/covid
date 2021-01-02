@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 27-12-2020 a las 13:36:33
+-- Tiempo de generación: 02-01-2021 a las 14:28:21
 -- Versión del servidor: 10.3.27-MariaDB-0+deb10u1
 -- Versión de PHP: 7.3.19-1~deb10u1
 
@@ -55,7 +55,8 @@ INSERT INTO `nota` (`id`, `dni_paciente`, `nota`, `id_usuario`, `fecha`, `estado
 (11, '45621188R', 'Pues al final va a ser que no la palma. Se ha maquillado y tiene mejor pinta. Igual escapa', 4, '2020-12-22 09:14:17', 'contagiado'),
 (12, '45621188R', 'Y se curó el tío. Nada, a seguir cobrando la pensión!!!', 4, '2020-12-29 13:18:25', 'curado'),
 (18, '78131131V', 'Se recuperará', 3, '2020-12-22 14:22:03', 'contagiado'),
-(19, '78131131V', 'El paciente presenta bastante mejoría y da negativo en PCR.', 4, '2020-12-22 14:25:06', 'contagiado');
+(19, '78131131V', 'El paciente presenta bastante mejoría y da negativo en PCR.', 4, '2020-12-22 14:25:06', 'contagiado'),
+(20, '78131131V', 'Al fin curado', 4, '2020-12-30 11:10:24', 'curado');
 
 -- --------------------------------------------------------
 
@@ -81,13 +82,13 @@ CREATE TABLE `paciente` (
 INSERT INTO `paciente` (`dni`, `codigo_acceso`, `email`, `nombre`, `apellido_1`, `apellido_2`, `telefono`, `estado`) VALUES
 ('10231815M', '1ee9b48b', 'ocdelfuturo@gmail.com', 'Octavio', 'Acebes', '', '456753159', 'contagiado'),
 ('11222333O', '84384847', 'adlc@gmail.com', 'Andrés', 'de la Cuadra', 'Carballo', '922333444', 'contagiado'),
-('12345678x', '5e527874', 'x@x.com', 'Jose', 'Manuel', 'Luis', '123456789', 'contagiado'),
+('12345678X', '5e527874', 'x@x.com', 'Jose', 'Manuel', 'Luis', '123456789', 'contagiado'),
 ('12456835S', 'd222674b', '', 'Juana', 'Diaz', 'Luis', '928223222', 'contagiado'),
 ('22511312J', '2fbc32f4', 'serranin@outlook.com', 'Ismael', 'Serrano', '', '600600601', 'contagiado'),
 ('41312199M', '9f5d0c6d', 'pag@gmail.com', 'Pedro', 'Alarcón', 'Gutierrez', '919089093', 'contagiado'),
-('45621188R', 'f7158e0a', 'anmar@gmail.com', 'Antonio', 'Martín', 'Martín', '661113225', 'contagiado'),
-('45675312y', 'a52af585', 'AaAlB@OUTLOOK.COM', 'Adriana', 'Alabarez', 'Albarado', '123456789', 'contagiado'),
-('78131131V', '11c7edbe', 'fsguerra@yahoo.es', 'Fermín', 'Suarez', 'Guerra', '666777222', 'contagiado'),
+('45621188R', 'f7158e0a', 'anmar@gmail.com', 'Antonio', 'Martín', 'Martín', '661113225', 'curado'),
+('45675312Y', 'a52af585', 'AaAlB@OUTLOOK.COM', 'Adriana', 'Alabarez', 'Albarado', '123456789', 'contagiado'),
+('78131131V', '11c7edbe', 'fsguerra@yahoo.es', 'Fermín', 'Suarez', 'Guerra', '666777222', 'curado'),
 ('78543215D', 'e843c2c6', 'fcm@gmail.com', 'Fernando', 'de las Casas', 'Martínez', '456123852', 'contagiado'),
 ('84562325I', '5ec20dfc', 'LPP@gmail.com', 'Laura', 'Perez', 'Perez', '765432122', 'contagiado');
 
@@ -99,7 +100,8 @@ INSERT INTO `paciente` (`dni`, `codigo_acceso`, `email`, `nombre`, `apellido_1`,
 -- Indices de la tabla `nota`
 --
 ALTER TABLE `nota`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nota_paciente_fk` (`dni_paciente`);
 
 --
 -- Indices de la tabla `paciente`
@@ -116,7 +118,17 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `nota`
+--
+ALTER TABLE `nota`
+  ADD CONSTRAINT `nota_paciente_fk` FOREIGN KEY (`dni_paciente`) REFERENCES `paciente` (`dni`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

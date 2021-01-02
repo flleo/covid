@@ -1,5 +1,6 @@
 <?php
 
+require 'bddsx/config.php';
 session_start();
 if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location: data_source/cerrarUsuario.php?error=1");
 
@@ -21,10 +22,79 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 	    </script>
+	   	<script type="text/javascript" src="js/cliente.js"></script>
+	   	<style type="text/css">
+	   		
+	   		#individuo{
+	   			cursor: pointer;
+	   		}
+	   		#individuo:hover {
+	   			color: blue;
+	   		}
+
+
+	   	</style>
 	</head>
 	<body>
-	<?php include 'navbar.php'; 
+	<?php include 'navbar.php';
 	?>
+
+
+		<div class="container">
+			<button type="button" onclick="lista(<?php echo $_SESSION['id']; ?>)" class="btn btn-primary btn-sm">Mis pacientes</button>
+			<button type="button" onclick="lista('')" class="btn btn-primary btn-sm">Lista completa</button>
+		
+		</div>
+
+
+		<div class="container" id="menu_medico">
+	
+			<form>
+				<div class='row'>
+					<div class='col-2'>
+						<label for="apellido_1">Primer apellido</label><br>
+						<input type='text' name='apellido_1' id="apellido_1">
+					</div>
+					<div class='col-2'>
+						<label for="apellido_2">Segundo apellido</label><br>
+						<input type='text' name='apellido_2' id="apellido_2"></div>
+					<div class='col-2'>
+						<label for="nombre">Nombre</label><br>
+						<input type='text' name='nombre' id="nombre"></div>
+					<div class='col-2'>
+						<label for="dni">D.N.I / N.I.E</label><br>
+						<input type='text' name='dni' id="dni"></div>
+					<div class='col-2'>
+						<label for="codigo_acceso">Código de acceso</label><br>
+						<input type='text' name='codigo_acceso' id="codigo_acceso"></div>
+					<div class='col-2'><button type='button' onclick='busqueda()' class='btn btn-secondary btn-sm' title="Para buscar, introduzca un dni, un código de acceso o un primer apellido. La prioridad de búsqueda se hará en ese orden obviando el resto de datos. Para filtrar por estado, únicamente marque los estados que quiere recuperar">Buscar</button></div>
+	
+				</div>
+				<div class="container">
+					<label class="checkbox-inline">
+						<input type="checkbox" id="contagiado" value=""> Contagiado
+					</label>
+					<label class="checkbox-inline">
+						<input type="checkbox" id="curado" value=""> Curado
+					</label>
+					<label class="checkbox-inline">
+						<input type="checkbox" id="fallecido" value=""> Fallecido
+					</label>
+				</div>
+
+			</form>
+			<hr>
+			<h4 id="titulo"></h4>
+
+
+		</div>
+
+		<div class="container" id="seccion">
+
+		</div>
+
+
+
 
     	   
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -35,6 +105,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
 	    </script>
+	    <script type="text/javascript">lista(<?php echo $_SESSION['id']; ?>)</script>
 	</body>
 
 	</html>

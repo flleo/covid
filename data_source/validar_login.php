@@ -25,7 +25,8 @@
                 $_SESSION['apellido2'] = $key['Apellido_2'];
                 $_SESSION['email'] = $key['Email'];
                 $_SESSION['password'] = $key['Contrasena'];
-            
+                
+                print_r($_SESSION);
                 switch($_SESSION['rol']) {
                     case 'Administrador':   header("Location:../administrador.php");break;
                     case 'Rastreador':      header("Location:../rastreador.php");break;
@@ -59,15 +60,12 @@
         curl_close($curl);
 
         if (count($response)===1) {
-            print_r($response[0]);
             $_SESSION['user_type'] = 'paciente';
             $_SESSION['dni'] = $_POST['dni']; 
             $_SESSION['codigo_acceso'] = $_POST['code'];
-            $_SESSION['email'] = $response[0]['email'];            
             $_SESSION['nombre'] = $response[0]['nombre']; 
-            $_SESSION['apellido1'] = $response[0]['apellido_1'] ;
-            $_SESSION['apellido2'] = $response[0]['apellido_2'];
-            $_SESSION['telefono'] = $response[0]['telefono'];
+            $_SESSION['apellido_1'] = $response[0]['apellido_1'] ;
+            $_SESSION['apellido_2'] = $response[0]['apellido_2'];
             $_SESSION['estado'] = $response[0]['estado'];
             header("Location:../paciente.php");
         }
