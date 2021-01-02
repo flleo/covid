@@ -23,7 +23,6 @@ if (isset($_POST['submit'])) {
             header("Location: cerrarUsuario.php?error='1'");
         }
     } else {
-        // Actualiaa paciente logueado (no funciona)
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $ser_ext.'serv_pac.php?accion=update&dni=' . $_POST['submit'] .'&email='.$_POST['email']. '&nombre=' . $_POST['nombre']. '&apellido1=' . $_POST['apellido1']. '&apellido2=' . $_POST['apellido2']. '&telefono=' . $_POST['telefono'].'&cas='.$cod_acc_serv,
