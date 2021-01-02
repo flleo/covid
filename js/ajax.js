@@ -1,3 +1,4 @@
+
 const buscador = document.getElementById('buscador');
 
 buscador.addEventListener('keyup',(e)=>{
@@ -13,7 +14,9 @@ buscador.addEventListener('keyup',(e)=>{
         }
     }
 
-    http.open("POST","./data_source/listadoAv.php", true);
+    http.open("POST","./data_source/administrador.php", true);
     http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     http.send(`buscar=${busco}`);
-})
+});
+
+

@@ -23,13 +23,12 @@ if (isset($_SESSION['nombre'])) {
                 ';
 } else {
     if (isset($_SESSION['rol'])) {
-        echo '
-                                <a class="nav-link text-info"  onclick="usuarios()" href="">Usuarios <span
-                                        class="sr-only">(current)</span></a>
-                                <a class="nav-link text-info"  onclick="pacientes()" href="#">Pacientes</a>
-                                ';
+        if($_SESSION['rol'] == 'Administrador') {
+            echo '  <a class="nav-link text-info"  onclick="usuarios()" href="">Usuarios <span class="sr-only">(current)</span></a>
+            <a class="nav-link text-info"  onclick="pacientes()" href="#">Pacientes</a>   ';
+        } 
+       
     }
-
     echo '<a id="user" class="nav-link text-success" href="modificar_usuario.php">' . $user . '<span
                 class="sr-only">(current)</span></a>
                 <a class="nav-link text-secondary" href="./data_source/cerrarUsuario.php">Salir<span

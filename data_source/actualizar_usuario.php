@@ -8,7 +8,7 @@ session_start();
 if (isset($_POST['submit'])) { 
     if($_SESSION['user_type'] == 'usuario')  {
         $conn = Cuentas::loginAdmin();
-        $result = Consulta::updateUser($conn);
+        $result = Consulta::updateUser($conn);  //Actualiza usuario logueado
         if ($result) {
             switch ($_SESSION['rol']) {
                 case 'Administrador':header("Location:../administrador.php");
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
     } else {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $ser_ext.'/serv_pac.php?accion=update&dni=' . $_POST['submit'] . '&nombre=' . $_POST['nombre']. '&apellido1=' . $_POST['apellido1']. '&apellido2=' . $_POST['apellido2']. '&telefono=' . $_POST['telefono'].'&cas='.$cod_acc_serv,
+            CURLOPT_URL => $ser_ext.'serv_pac.php?accion=update&dni=' . $_POST['submit'] .'&email='.$_POST['email']. '&nombre=' . $_POST['nombre']. '&apellido1=' . $_POST['apellido1']. '&apellido2=' . $_POST['apellido2']. '&telefono=' . $_POST['telefono'].'&cas='.$cod_acc_serv,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -36,12 +36,17 @@ if (isset($_POST['submit'])) {
         ));   
         $response = curl_exec($curl);
         curl_close($curl);
-        if ($response != null) {
+
+        if ($response!==0) {
+            $_SESSION['dni'] = $_POST['submit']; 
+            $_SESSION['email'] = $_POST['email'];            
+            $_SESSION['nombre'] = $_POST['nombre']; 
+            $_SESSION['apellido1'] = $_POST['apellido1'] ;
+            $_SESSION['apellido2'] = $_POST['apellido2'];
+            $_SESSION['telefono'] = $_POST['telefono'];
             header("Location:../paciente.php");
-        } else {
-            
         }
-      
+        
     }
   
 }

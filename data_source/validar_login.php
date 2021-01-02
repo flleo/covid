@@ -46,7 +46,7 @@
     if(isset($_POST['dni']) &&  isset($_POST['code'])){
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $ser_ext.'serv_pac.php?accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'].'&cas='.$cod_acc_serv,
+            CURLOPT_URL => $ser_ext.'serv_pac.php?cas='.$cod_acc_serv.'&accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
