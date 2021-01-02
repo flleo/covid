@@ -9,7 +9,7 @@
     require('../bdd/consulta.php');
 
 
-    if(isset($_POST['email']) &&  isset($_POST['password'])){
+    if(isset($_POST['email']) &&  isset($_POST['password'])) {
         $conn = Cuentas::login();
         $result = Consulta::verificarUser($conn);
    

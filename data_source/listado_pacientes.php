@@ -25,7 +25,7 @@ switch($_SESSION['rol']) {
     case 'Rastreador': $location = 'rastreador.php'; break;
     case 'Administrador': $location = 'administrador.php'; break;
 }   
-header("Location:../".$location."?pacientes=".$response);
+header("Location:../".$location."?pacientes");
 
 
 ?>
