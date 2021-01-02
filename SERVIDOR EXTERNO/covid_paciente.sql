@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-01-2021 a las 14:28:21
+-- Tiempo de generación: 02-01-2021 a las 21:01:47
 -- Versión del servidor: 10.3.27-MariaDB-0+deb10u1
 -- Versión de PHP: 7.3.19-1~deb10u1
 
@@ -56,7 +56,11 @@ INSERT INTO `nota` (`id`, `dni_paciente`, `nota`, `id_usuario`, `fecha`, `estado
 (12, '45621188R', 'Y se curó el tío. Nada, a seguir cobrando la pensión!!!', 4, '2020-12-29 13:18:25', 'curado'),
 (18, '78131131V', 'Se recuperará', 3, '2020-12-22 14:22:03', 'contagiado'),
 (19, '78131131V', 'El paciente presenta bastante mejoría y da negativo en PCR.', 4, '2020-12-22 14:25:06', 'contagiado'),
-(20, '78131131V', 'Al fin curado', 4, '2020-12-30 11:10:24', 'curado');
+(20, '78131131V', 'Al fin curado', 4, '2020-12-30 11:10:24', 'curado'),
+(21, '10231815M', 'El estado del paciente ha empeorado en las últimas 24h. Ha sido enviado a UCI e intubado. En estos momentos necesita respiración asistida. Si su estado no mejora en las próximas 12h se procederá a su sedación.', 4, '2021-01-02 20:36:15', 'contagiado'),
+(22, '84562325I', 'La paciente presenta desde hace días una notable mejoría. La prueba diagnóstica de <i>Reacción en Cadena de Polimerasa</i> ha dado como resultado negativo en presecia de virus, por lo que será dada de alta en las próximas horas.', 4, '2021-01-02 20:41:17', 'curado'),
+(23, '11222333O', 'Paciente con un cuadro clínico crítico. Con ventilación asistida y sedación en los últimos 4 días. No presenta reacción a estímulos. Declarada la defuncióna a las 15:35 horas del día 21 de diciembre de 2020.', 4, '2021-01-02 20:43:42', 'fallecido'),
+(24, '12456835S', 'El paciente mantiene su estado. Sigue intubado y con pirexia de 39.2 celsius.', 4, '2021-01-02 20:45:31', 'contagiado');
 
 -- --------------------------------------------------------
 
@@ -81,7 +85,7 @@ CREATE TABLE `paciente` (
 
 INSERT INTO `paciente` (`dni`, `codigo_acceso`, `email`, `nombre`, `apellido_1`, `apellido_2`, `telefono`, `estado`) VALUES
 ('10231815M', '1ee9b48b', 'ocdelfuturo@gmail.com', 'Octavio', 'Acebes', '', '456753159', 'contagiado'),
-('11222333O', '84384847', 'adlc@gmail.com', 'Andrés', 'de la Cuadra', 'Carballo', '922333444', 'contagiado'),
+('11222333O', '84384847', 'adlc@gmail.com', 'Andrés', 'de la Cuadra', 'Carballo', '922333444', 'fallecido'),
 ('12345678X', '5e527874', 'x@x.com', 'Jose', 'Manuel', 'Luis', '123456789', 'contagiado'),
 ('12456835S', 'd222674b', '', 'Juana', 'Diaz', 'Luis', '928223222', 'contagiado'),
 ('22511312J', '2fbc32f4', 'serranin@outlook.com', 'Ismael', 'Serrano', '', '600600601', 'contagiado'),
@@ -90,7 +94,7 @@ INSERT INTO `paciente` (`dni`, `codigo_acceso`, `email`, `nombre`, `apellido_1`,
 ('45675312Y', 'a52af585', 'AaAlB@OUTLOOK.COM', 'Adriana', 'Alabarez', 'Albarado', '123456789', 'contagiado'),
 ('78131131V', '11c7edbe', 'fsguerra@yahoo.es', 'Fermín', 'Suarez', 'Guerra', '666777222', 'curado'),
 ('78543215D', 'e843c2c6', 'fcm@gmail.com', 'Fernando', 'de las Casas', 'Martínez', '456123852', 'contagiado'),
-('84562325I', '5ec20dfc', 'LPP@gmail.com', 'Laura', 'Perez', 'Perez', '765432122', 'contagiado');
+('84562325I', '5ec20dfc', 'LPP@gmail.com', 'Laura', 'Perez', 'Perez', '765432122', 'curado');
 
 --
 -- Índices para tablas volcadas
@@ -118,7 +122,7 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Restricciones para tablas volcadas
 --

@@ -92,6 +92,9 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 		<div class="container" id="seccion">
 
 		</div>
+		<div class="container" id="adicional">
+
+		</div>
 
 
 

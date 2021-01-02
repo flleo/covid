@@ -81,23 +81,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     if(isset($_GET['accion'])){
         switch ($_GET['accion']) {
             case 'lista':
-                // Listado de pacientes
-                // recibe: los tres estados con true o false
-                // Devuelve una lista de todos los pacientes que cumplan esa condición con DNI, codigo acceso, nombre, apellido, apellido_2, email, teléfono, estado
-                $estados=array();
-                $secuencia="SELECT * FROM paciente WHERE";
-                if ($_GET['contagiado'] ) {array_push($estados," estado='Contagiado'");}
-                if ($_GET['asintomatico']) {array_push($estados, " estado='Asintomático'");}
-                if ($_GET['recuperado'] != '') {array_push($estados, " estado='Recuperado'");}
-                if ($_GET['fallecido']) {array_push($estados, " estado='Fallecido'");}
-
-                for ($i=0; $i<count($estados);$i++) {
-                    $secuencia.= $estados[$i]." OR";
+                // Listados de pacientes
+                if (isset($_GET['filtro'])){
+                    switch ($_GET['filtro']) {
+                        case 'id':
+                            // Recibe el id del usuario
+                            // Devuelve el listado de pacientes con dni, nombre, apellidos, codigo de acceso y estado actual de los pacientes con notas registradas por el usuario concreto.
+                            $secuencia="SELECT DISTINCT dni, nombre, apellido_1, apellido_2, codigo_acceso, paciente.estado FROM paciente INNER JOIN nota ON nota.dni_paciente=paciente.dni WHERE nota.id_usuario=:idu ORDER BY apellido_1, apellido_2;";
+                            $sql = $dbConn->prepare($secuencia);
+                            $sql->bindValue(':idu', $_GET["valor"]);
+                            break;
+                        case 'dni':
+                            // Recibe el dni del paciente
+                            // Devuelve el paciente que tenga ese dni, con dni, nombre, apellidos, codigo de acceso y estado actual.
+                            $secuencia="SELECT dni, nombre, apellido_1, apellido_2, codigo_acceso, estado FROM paciente WHERE dni=:dni;";
+                            $sql = $dbConn->prepare($secuencia);
+                            $sql->bindValue(':dni', $_GET["valor"]);
+                            break;
+                        case 'codigo_acceso':
+                            // Recibe el código de acceso del paciente
+                            // Devuelve el paciente que tenga ese dni, con dni, nombre, apellidos, codigo de acceso y estado actual.
+                            $secuencia="SELECT dni, nombre, apellido_1, apellido_2, codigo_acceso, estado FROM paciente WHERE codigo_acceso=:cac;";
+                            $sql = $dbConn->prepare($secuencia);
+                            $sql->bindValue(':cac', $_GET["valor"]);
+                            break;
+                        case 'apellidos':
+                            // Recibe el primer apellido, y el segundo y el nombre separados por , si se envían
+                            // Devuelve el o los pacientes que respondan a los criterios de búsqueda de apellidos y nombre, con dni, nombre, apellidos, codigo de acceso y estado actual. Basta con las primeras letras
+                            $identidad=explode(',', $_GET['valor']);
+                            $secuencia="SELECT dni, nombre, apellido_1, apellido_2, codigo_acceso, estado FROM paciente WHERE apellido_1 LIKE :ap1 AND apellido_2 LIKE :ap2 AND nombre LIKE :nom ORDER BY apellido_1 ASC, apellido_2 ASC;";
+                            $sql = $dbConn->prepare($secuencia);
+                            $sql->bindValue(':ap1', $identidad[0].'%');
+                            $sql->bindValue(':ap2', $identidad[1].'%');
+                            $sql->bindValue(':nom', $identidad[2].'%');
+                            break;
+                        case 'estado':
+                            // Recibe tres valores booleanos para saber filtro de estado se aplica
+                            // Devuelve todos los pacientes que cumplan las condiciones de estado, con dni, nombre, apellidos, codigo de acceso y estado actual.
+                            $secuencia="SELECT dni, nombre, apellido_1, apellido_2, codigo_acceso, estado FROM paciente WHERE ";
+                            $estado=explode(',', $_GET['valor']);
+                            if ($estado[0]=='true') {$secuencia.="estado='contagiado' OR ";}
+                            if ($estado[1]=='true') {$secuencia.="estado='curado' OR ";}
+                            if ($estado[2]=='true') {$secuencia.="estado='fallecido' OR ";}
+                            $secuencia=substr($secuencia,0,strlen($secuencia)-3)."ORDER BY apellido_1 ASC, apellido_2 ASC;";
+                            $sql = $dbConn->prepare($secuencia);
+                            break;
+                        case '':
+                            // Recibe nada
+                            // Devuelve todos los pacientes con dni, nombre, apellidos, codigo de acceso y estado actual.
+                            $secuencia="SELECT dni, nombre, apellido_1, apellido_2, codigo_acceso, estado FROM paciente ORDER BY apellido_1 ASC, apellido_2 ASC;";
+                            $sql = $dbConn->prepare($secuencia);
+                            break;                  
+                    }
                 }
-
-                $secuencia=substr($secuencia,0,strlen($secuencia)-4)." ORDER BY apellido_1 ASC, apellido_2 ASC;";
-
-                $sql = $dbConn->prepare($secuencia);
                 $sql->execute();
                 $sql->setFetchMode(PDO::FETCH_ASSOC);
                 echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
@@ -111,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
                 // Devuelve: nombre, apellidos, dni, email, teléfono, fecha primer contagio, número de notas registradas
                     
                if (isset($_GET['dni'])){
-                          $secuencia = "SELECT * FROM paciente WHERE dni=:dni;";
+                    $secuencia = "SELECT * FROM paciente WHERE dni=:dni;";
                     $sql = $dbConn->prepare($secuencia);
                     $sql->bindValue(':dni', $_GET["dni"]);
 
@@ -126,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
                     $sql->execute();
                     $sql->setFetchMode(PDO::FETCH_ASSOC);                    
                     $sql1=$sql->fetchAll();
-                    
+                     
                     //print_r($sql0);
                     //print_r($sql1);
                     
@@ -138,21 +174,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
                     //print_r($sql->fetchAll());
                     echo json_encode($sql2,JSON_INVALID_UTF8_IGNORE);
                     header("HTTP/1.1 200 OK");        
-                      exit();
-               }
-                break;
-                case 'notas':
-                    $sql = $dbConn->prepare("SELECT nota, fecha, id_usuario FROM nota WHERE dni_paciente=:dni ORDER BY fecha ASC ");
-                    $sql->bindValue(':dni', $_GET['dni']);
-                    $sql->execute();
-                    $sql->setFetchMode(PDO::FETCH_ASSOC);
-                    echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
-            
-                    header("HTTP/1.1 200 OK");
                     exit();
-                    break;
-                case 'datos_medico';
+                }
+                break;
             
+            case 'notas':
+                // historia clínica del paciente
+                // recibe: dni del paciente
+                // devuelve todas las notas asociadas.
+                $sql = $dbConn->prepare("SELECT nota, fecha, id_usuario, estado FROM nota WHERE dni_paciente=:dni ORDER BY fecha DESC ");
+                $sql->bindValue(':dni', $_GET['dni']);
+                $sql->execute();
+                $sql->setFetchMode(PDO::FETCH_ASSOC);
+                echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
+            
+                header("HTTP/1.1 200 OK");
+                exit();
                 break;
             }
     }

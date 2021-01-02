@@ -9,32 +9,30 @@ global $cod_acc_serv; // Para que recoga la variable el if si no n o la coge
   Busqueda de datos del paciente
  */
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
-    // Si le meto la variable $cod_acc_serv no la coge
-    if(isset($_GET['cas']) && $_GET['cas']==$cod_acc_serv) {
-        if (isset($_GET['dni']) && isset($_GET['codigo_acceso'])){
-            if ($_GET['accion']=="datos"){
-                //Recibe un dni y un codigo de acceso.
-                //Devuelve: nombre, apellidos y estado del paciente, más su historial con nota y fecha.
-                $sql = $dbConn->prepare("SELECT email, nombre, apellido_1, apellido_2, telefono, estado FROM paciente WHERE dni=:dni AND codigo_acceso=:cac");
-                $sql->bindValue(':dni', $_GET['dni']);
-                $sql->bindValue(':cac', $_GET['codigo_acceso']);
-                $sql->execute();
-                $sql->setFetchMode(PDO::FETCH_ASSOC);
-                echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
-                header("HTTP/1.1 200 OK");
-                exit();
-            }
-            elseif ($_GET['accion']=="notas"){
-                $sql = $dbConn->prepare("SELECT nota, fecha, id_usuario FROM nota WHERE dni_paciente=:dni ORDER BY fecha ASC ");
-                $sql->bindValue(':dni', $_GET['dni']);
-                $sql->execute();
-                $sql->setFetchMode(PDO::FETCH_ASSOC);
-                echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
-                
-                header("HTTP/1.1 200 OK");
-                exit();
-            }
+    if (isset($_GET['dni']) && isset($_GET['codigo_acceso'])){
+        if ($_GET['accion']=="datos"){
+            //Recibe un dni y un codigo de acceso.
+            //Devuelve: nombre, apellidos y estado del paciente, más su historial con nota y fecha.
+            $sql = $dbConn->prepare("SELECT nombre, apellido_1, apellido_2, estado FROM paciente WHERE dni=:dni AND codigo_acceso=:cac");
+            $sql->bindValue(':dni', $_GET['dni']);
+            $sql->bindValue(':cac', $_GET['codigo_acceso']);
+            $sql->execute();
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
+            header("HTTP/1.1 200 OK");
+            exit();
         }
+        elseif ($_GET['accion']=="notas"){
+            $sql = $dbConn->prepare("SELECT nota, fecha, id_usuario FROM nota WHERE dni_paciente=:dni ORDER BY fecha ASC ");
+            $sql->bindValue(':dni', $_GET['dni']);
+            $sql->execute();
+            $sql->setFetchMode(PDO::FETCH_ASSOC);
+            echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
+            
+            header("HTTP/1.1 200 OK");
+            exit();
+        }
+
     
         if ($_GET['accion']=="update"){           
             if(isset($_GET['estado'])) {
