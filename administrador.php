@@ -65,7 +65,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
                         </div>
                         <div class="form-group">
                             <select id='select' name='rol' require>
-                                <option value='Medico'>Médico</option>
+                                <option value='Médico'>Médico</option>
                                 <option value='Rastreador'>Rastreador</option>
                                 <option value='Administrador'>Administrador</option>
                             </select>
@@ -85,35 +85,36 @@ for ($i = 1; $i <= $rows;) {
                     <div id='listado'>
                         <form action='data_source/actualizar_usuarios.php' class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
                             <div class='form-group'>
-                                <input name='nombre' type='text' value=" <?php echo $key['Nombre'] ?> " require >
+                                <input name='nombre' type='text' value=<?php echo $key['Nombre'] ?>  require >
                             </div>
                                 <div class='form-group'>
-                                    <input name='apellido1' type='text' value=" <?php echo $key['Apellido_1']?>  " require>
+                                    <input name='apellido1' type='text' value=<?php echo $key['Apellido_1']?> require>
                                 </div>
                                 <div class='form-group'>
-                                    <input name='apellido2' type='text' value="  <?php echo $key['Apellido_2']?>  " >
+                                    <input name='apellido2' type='text' value=<?php echo $key['Apellido_2']?>>
                                 </div>
                                 <div class='form-group'>
-                                    <input name='email' type='text' value="  <?php echo $key['Email']?>  " >
+                                    <input name='email' type='text' value=<?php echo $key['Email']?>>
                                 </div>
                                 <div class='form-group'>
-                                    <input name='password' type='password' value="   <?php echo $key['Contrasena']?>  " require>
+                                    <input name='password' type='password' value=<?php echo $key['Contrasena']?>   require>
                                 </div>
                                 <div class='form-group'>
                                     <select id='select' name='rol' require>
-                                        <option value="  <?php echo $key['Roll'] ?> ">"   <?php echo $key['Roll']?>  "</option>
+                                        <option value=<?php echo $key['Roll'] ?>><?php echo $key['Roll']?></option>
                                         <option value='Médico'>Medico</option>
                                         <option value='Rastreador'>Rastreador</option>
                                         <option value='Administrador'>Administrador</option>
                                     </select>
                                 </div>
-                                <button type='submit' name='submit' value="   <?php echo $key['ID']?>  " class='btn btn-primary col-1'>Modificar</button>    
+                                <button type='submit' name='submit' value=<?php echo $key['ID']?> class='btn btn-primary col-1'>Modificar</button>    
                         </form>                         
                     </div>
 <?php
         $i++;
     }
 }
+
 ?>
             </div>
   
@@ -123,7 +124,7 @@ for ($i = 1; $i <= $rows;) {
                 <form action="data_source/listado_pacientes.php" method="post" class="mt-5">
                     <input name="contagiado" type="checkbox" class="mr-2"> Contagiados
                     <input name="asintomatico" type="checkbox" class="m-2"> Asintomáticos
-                    <input name="recuperado" type="checkbox" class="m-2"> Curados
+                    <input name="recuperado" type="checkbox" class="m-2"> Recuperados
                     <input name="fallecido" type="checkbox" class="m-2"> Fallecidos
                     <button name="submit" type="submit" class="btn  border-primary ml-2 ">Listar</button>
                 </form>
@@ -183,54 +184,53 @@ for ($i = 1; $i <= $rows;) {
                         </tr>
                   
                         <?php
-
+include ('data_source/listado_pacientes.php');
+global $response;
 if (isset($_GET['pacientes'])) {
-    $response = $_GET['pacientes'];
-    $rows = $response->num_rows;
-    for ($i = 1; $i <= $rows;) {
+    
+    echo $response;
         foreach ($response as $key) {
                         ?>
                     <tr id="listado" class="listado">
                         <form action="data_source/actualizar_pacientes.php" class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
                             <td class="form-group">
-                                <input type="text" name="dni"  placeholder="Enter dni"  value="<?php echo $key['dni'] ?> " require >
+                                <input type="text" name="dni"  placeholder="Enter dni"  value=<?php echo $key['dni'] ?>require >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="codigo_acceso" value=" '. $key['codigo_acceso'] . '" require >
+                                <input type="text" name="codigo_acceso" value=<?php echo $key['codigo_acceso'] ?> require >
                             </td>
                             <td class="form-group">
-                                <input type="email" name="email" placeholder="Enter email"  value="<?php echo $key['email'] ?> " >
+                                <input type="email" name="email" placeholder="Enter email"  value=<?php echo $key['email'] ?>>
                             </td>
                             <td class="form-group">
-                                <input type="text" name="nombre" placeholder="Enter name"  value="<?php echo $key['Nombre'] ?> " require >
+                                <input type="text" name="nombre" placeholder="Enter name"  value=<?php echo $key['Nombre'] ?>  require >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="apellido1"  placeholder="Enter 1er apellido" value="<?php echo $key['apellido_1'] ?> " require >
+                                <input type="text" name="apellido1"  placeholder="Enter 1er apellido" value=<?php echo $key['apellido_1'] ?>  require >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="apellido2"  placeholder="Enter 2º apellido" value="<?php echo $key['apellido_2'] ?> "  >
+                                <input type="text" name="apellido2"  placeholder="Enter 2º apellido" value=<?php echo $key['apellido_2'] ?>   >
                             </td>
                             <td class="form-group">
-                                <input type="text" name="telefono"  placeholder="Enter telefono"  value="<?php echo $key['telefono'] ?> " require >
+                                <input type="text" name="telefono"  placeholder="Enter telefono"  value=<?php echo $key['telefono'] ?> require >
                             </td>
                             <td class="form-group">
-                                <select id="select" name="estado" value="<?php echo $key['estado'] ?> " require >
+                                <select id="select" name="estado" value=<?php echo $key['estado'] ?>  require >
                                     <option value="Contagiado">Contagiado</option>
                                     <option value="Asintomático">Asintomático</option>
                                     <option value="Recuperado">Recuperado</option>
                                     <option value="Fallecido">Fallecido</option>
                                 </select>
                             </td>
-                            <td><button type="submit" name="submit" value="<?php echo $key['dni'] ?> " class="btn btn-primary col-1">Modificar</button><td>
+                            <td><button type="submit" name="submit" value=<?php echo $key['dni'] ?>  class="btn btn-primary col-1">Modificar</button><td>
                         </form>
                     </tr>
                 </tbody>
             </table>           
 <?php
-$i++;
         }
     }
-}
+
 
 ?>
 
@@ -262,28 +262,7 @@ $i++;
                 $('#pacientes').show();
                 $('#usuarios').hide();
             }
-            // No funciona
-            $.ajax({
-                url: 'administrador.php?pacientes',
-                type: 'get',
-                success: function(response) {
-                    $('#pacientes').show();
-                    $('#usuarios').hide();
-                }
-            });
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "administrador.php?pacientes", true);
-            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-
-                    // Response
-                    pacientes();
-
-                }
-            };
-            xhttp.send();
+           
             </script>
 
 </body>
