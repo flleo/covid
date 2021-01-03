@@ -16,6 +16,9 @@ $dbConn =  connect($db_usu);
 //}
 
 //Servicios de excritura
+
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
@@ -75,11 +78,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 
-
 // Servicios de consulta
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     if(isset($_GET['accion'])){
         switch ($_GET['accion']) {
+            case 'update':
+                if(isset($_GET['estado'])) {
+                    $sql = $dbConn->prepare("UPDATE paciente SET nombre=:nombre, apellido_1=:apellido1, apellido_2=:apellido2, email=:email, telefono=:telefono, estado=:estado WHERE dni =:dni");
+                    $sql->bindValue(':estado', $_GET['estado']);
+            
+                } else {    // Si es el propio paciente el
+                    $sql = $dbConn->prepare("UPDATE paciente SET nombre=:nombre, apellido_1=:apellido1, apellido_2=:apellido2, email=:email, telefono=:telefono WHERE dni =:dni");           
+                }
+                $sql->bindValue(':dni', $_GET['dni']);
+                $sql->bindValue(':nombre', $_GET['nombre']);
+                $sql->bindValue(':apellido1', $_GET['apellido1']);
+                $sql->bindValue(':apellido2', $_GET['apellido2']);
+                $sql->bindValue(':email', $_GET['email']);
+                $sql->bindValue(':telefono', $_GET['telefono']);
+               
+                $sql->execute();
+                header("HTTP/1.1 200 OK");
+                exit(); 
             case 'lista':
                 // Listados de pacientes
                 if (isset($_GET['filtro'])){
@@ -134,6 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
                             break;                  
                     }
                 }
+
                 $sql->execute();
                 $sql->setFetchMode(PDO::FETCH_ASSOC);
                 echo json_encode($sql->fetchAll(),JSON_INVALID_UTF8_IGNORE);
