@@ -4,37 +4,37 @@ ser_ext = 'http://192.168.1.10/covid/';
 //      FUNCIONES PARA RASTREADOR
 
 
+/*
+function alta(){
 
-// function alta(){
+    var config= new FormData();
+    config.append("accion", "alta");
+    config.append("dni", document.getElementById("dni").value.toUpperCase());
+    config.append("nombre", document.getElementById("nombre").value);
+    config.append("apellido_1", document.getElementById("apellido_1").value);
+    config.append("apellido_2", document.getElementById("apellido_2").value);
+    config.append("email", document.getElementById("email").value.toLowerCase());
+    config.append("telefono", document.getElementById("telefono").value);
+    config.append("estado", 'contagiado');
+    config.append("id_usuario", document.getElementById("id_usuario").value);
 
-//     var config= new FormData();
-//     config.append("accion", "alta");
-//     config.append("dni", document.getElementById("dni").value.toUpperCase());
-//     config.append("nombre", document.getElementById("nombre").value);
-//     config.append("apellido_1", document.getElementById("apellido_1").value);
-//     config.append("apellido_2", document.getElementById("apellido_2").value);
-//     config.append("email", document.getElementById("email").value.toLowerCase());
-//     config.append("telefono", document.getElementById("telefono").value);
-//     config.append("estado", "contagiado");
-//     config.append("id_usuario", document.getElementById("id_usuario").value);
+    var opcionesPregunta = {
+      method: 'POST',
+      body: config,
+      redirect: 'follow'
+    };
 
-//     var opcionesPregunta = {
-//       method: 'POST',
-//       body: config,
-//       redirect: 'follow'
-//     };
+    fetch(ser_ext+"serv_usu.php", opcionesPregunta)
+    .then(response => response.text())
+    .then(result => {
+        console.log(result);
+    })
 
-//     fetch(ser_ext+"serv_usu.php", opcionesPregunta)
-//     .then(response => response.text())
-//     .then(result => {
-//         console.log(result);
-//     })
+    // a continuación añadimos la nota.
+    nota();
 
-//     // a continuación añadimos la nota.
-//     nota();
-
-// }
-
+}
+*/
 // function datosRas(){
 
 //     document.getElementById("seccion").innerHTML= "";
@@ -64,12 +64,9 @@ ser_ext = 'http://192.168.1.10/covid/';
 function lista(id) {  // terminada
 
     document.getElementById("adicional").innerHTML = "";
-    document.getElementById('form').style = "display:block";
-    try {
-        document.getElementById("seccion").innerHTML = "";
-    } catch {
-        document.getElementById("seccion_administrador").innerHTML = "";
-    }
+
+    document.getElementById("seccion").innerHTML = "";
+  
 
 
     var url;
@@ -89,11 +86,9 @@ function lista(id) {  // terminada
         .then(response => response.json())
         .then(res => {
             if (res.length > 0) {
-                try {
+        
                     document.getElementById("seccion").innerHTML = listadosMedico(res);
-                } catch {
-                    document.getElementById("seccion_administrador").innerHTML = listadosMedico(res);
-                }
+             
             }
             else { alert('No coincide con ningún registro'); }
         })
@@ -110,11 +105,8 @@ function busqueda() {   // terminada
             .then(response => response.json())
             .then(res => {
                 if (res.length > 0) {
-                    try {
                         document.getElementById("seccion").innerHTML = listadosMedico(res);
-                    } catch {
-                        document.getElementById("seccion_administrador").innerHTML = listadosMedico(res);
-                    }                                      
+                                                       
                     document.getElementById('titulo').innerHTML = "Paciente";
                 }
                 else { alert('No coincide con ningún registro'); }
@@ -127,11 +119,8 @@ function busqueda() {   // terminada
                 .then(response => response.json())
                 .then(res => {
                     if (res.length > 0) {
-                        try {
                             document.getElementById("seccion").innerHTML = listadosMedico(res);
-                        } catch {
-                            document.getElementById("seccion_administrador").innerHTML = listadosMedico(res);
-                        }  
+                       
                         document.getElementById('titulo').innerHTML = "Paciente";
                     }
                     else { alert('No coincide con ningún registro'); }
@@ -144,11 +133,8 @@ function busqueda() {   // terminada
                     .then(response => response.json())
                     .then(res => {
                         if (res.length > 0) {
-                            try {
-                                document.getElementById("seccion").innerHTML = listadosMedico(res);
-                            } catch {
-                                document.getElementById("seccion_administrador").innerHTML = listadosMedico(res);
-                            }  
+                            document.getElementById("seccion").innerHTML = listadosMedico(res);
+                             
                             document.getElementById('titulo').innerHTML = "Pacientes";
                         }
                         else { alert('No coincide con ningún registro'); }
@@ -162,11 +148,8 @@ function busqueda() {   // terminada
                         .then(response => response.json())
                         .then(res => {
                             if (res.length > 0) {
-                                try {
-                                    document.getElementById("seccion").innerHTML = listadosMedico(res);
-                                } catch {
-                                    document.getElementById("seccion_administrador").innerHTML = listadosMedico(res);
-                                }  
+                                document.getElementById("seccion").innerHTML = listadosMedico(res);
+                              
                                 document.getElementById('titulo').innerHTML = "Pacientes según criterio";
                             }
                             else { alert('No coincide con ningún registro'); }
@@ -195,14 +178,11 @@ async function datosPaciente(dni) {      // terminado
     var respuesta = "<div class='row'> <div class='col-4'><b>Nombre: </b>" + res[0].nombre + " " + res[0].apellido_1 + " " + res[0].apellido_2 + "</div>";
     respuesta += "<div class='col-2'><b>DNI: </b>" + dni + "</div><div class='col-2'><b>Teléfono: </b>" + res[0].telefono + "</div><div class='col-4'><b>Email: </b>" + res[0].email + "</div></div>";
     respuesta += "<div class='row'> <div class='col-4'><b>Código de acceso personal: </b>" + res[0].codigo_acceso + "</div> <div class='col-8'><b>Estado actual: </b>" + res[0].estado + "</div></div>";
-    try {
-        document.getElementById("seccion").innerHTML = respuesta;
-    } catch {
-        document.getElementById("seccion_administrador").innerHTML = respuesta;
-    }
+  
+    document.getElementById("seccion").innerHTML = respuesta;
+  
     
     document.getElementById('titulo').innerHTML = "Notas del paciente";
-    document.getElementById('form').style = "display:none";
 }
 
 function historial(dni) {  // terminado

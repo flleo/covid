@@ -51,6 +51,10 @@ if(isset($_GET['log'])) {
                         <label for="password" class="text-info">Password:</label><br>
                         <input type="password" name="password" id="password" class="form-control"  required>
                     </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-info btn-md">Entrar</button>
+                        <a href="recuperacion.php?usu">¿No recuerdas tú contraseña?</a>
+                    </div>
                     ';
                     }  else {
                         echo '
@@ -62,12 +66,14 @@ if(isset($_GET['log'])) {
                         <label for="code" class="text-info">Código de acceso</label><br>
                         <input type="text" name="code" id="code" class="form-control"  required>
                     </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-info btn-md">Entrar</button>
+                        <a href="recuperacion.php?pac">¿No recuerdas tú código de acceso?</a>
+                    </div>
                     ';
                     }
                 ?>
-                <div class="form-group">
-                    <button type="submit" name="submit" class="btn btn-info btn-md">Entrar</button>
-                </div>
+               
             </form>
         </div>
 

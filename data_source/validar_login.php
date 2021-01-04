@@ -15,9 +15,10 @@
    
         $num_row = $result->num_rows;
 
-        if($num_row ===1){
+        if($num_row === 1){
 
             foreach ($result as $key) {
+                $_SESSION['user_type'] = 'usuario';
                 $_SESSION['id'] = $key['ID'];
                 $_SESSION['rol'] = $key['Roll'];               
                 $_SESSION['nombre'] = $key['Nombre']; 
