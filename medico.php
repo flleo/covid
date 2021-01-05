@@ -23,12 +23,13 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 	    </script>
 	   	<script type="text/javascript" src="js/cliente.js"></script>
+	   	<link rel="shortcut icon" href="img/logo_1.png"/>
 	   	<style type="text/css">
 	   		
-	   		#individuo{
+	   		#editable{
 	   			cursor: pointer;
 	   		}
-	   		#individuo:hover {
+	   		#editable:hover {
 	   			color: blue;
 	   		}
 
@@ -40,7 +41,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	?>
 
 
-		<div class="container">
+		<div class="container" id="listas">
 			<button type="button" onclick="lista(<?php echo $_SESSION['id']; ?>)" class="btn btn-primary btn-sm">Mis pacientes</button>
 			<button type="button" onclick="lista('')" class="btn btn-primary btn-sm">Lista completa</button>
 		
@@ -84,9 +85,12 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 
 			</form>
 			<hr>
+			
+
+
+		</div>
+		<div class="container">
 			<h4 id="titulo"></h4>
-
-
 		</div>
 
 		<div class="container" id="seccion">

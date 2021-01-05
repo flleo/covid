@@ -38,6 +38,7 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 	        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	    <!-- css -->
 	    <link rel="stylesheet" href="css/css.css">
+	    <link rel="shortcut icon" href="img/logo_1.png"/>
 	    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 	    </script>
@@ -61,13 +62,21 @@ if(isset($_SESSION['dni']) && isset($_SESSION['codigo_acceso'])) {
 						if ($result['Roll']=='Rastreador') {$rol="Rastreador: ";}
 						elseif ($result['Roll']=='Médico') {$rol="Profesional Sanitario: ";}
 
+
+						$fecha_formato = date('d-m-Y (H:i)',strtotime($response[$i]['fecha']));	
+
 	     				$salida= '<div class="border p-3 my-3">';
 						 $salida.= '<div class="row table-info" > <div class="col-sm-8 p-2">';
 						if(isset($rol))
 			     			$salida.=$rol.$result['Nombre']." ".$result['Apellido_1'];
 			     		$salida.='</div> <div class="col-sm-4 text-right font-weight-bold table-info">';
-			     		$salida.=$response[$i]['fecha'];
-			     		$salida.='</div> </div>';
+			     		if(isset($response[$i]['estado'])) 
+							$salida.=$fecha_formato."<br>Estado: ".$response[$i]['estado'];
+						$salida.='</div> </div>';
+
+			     		
+			     		// $salida.=$fecha_formato;
+			     		// $salida.='</div> </div>';
 
 			     		$salida.='<div class="m-1">';
 			     		$salida.=$response[$i]['nota'];

@@ -1,5 +1,10 @@
 <?php 
 
+session_start();
+if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location: data_source/cerrarUsuario.php?error=1");
+// print_r($_SESSION);
+// exit();
+
 require '../bddsx/config.php';
 require '../bdd/config.php';
 require '../bdd/consulta.php';
@@ -18,7 +23,6 @@ curl_setopt_array($curl, array(
 $response = json_decode(curl_exec($curl),true);
 curl_close($curl);
 
-
 for ($i=0; $i<count($response);$i++) {
 	// cosulta de los usuarios
 	$conn = Cuentas::login();
@@ -26,11 +30,8 @@ for ($i=0; $i<count($response);$i++) {
 	if ($result['Roll']=='Rastreador') {$rol="Rastreador: ";}
 	elseif ($result['Roll']=='Médico') {$rol="Profesional Sanitario: ";}
 
-
 	$fecha_formato = date('d-m-Y (H:i)',strtotime($response[$i]['fecha']));	
-	// $fecha_formato = $response[$i]['fecha'];
-
-
+	
 	$salida= '<div class="border p-3 my-3">';
 	$salida.= '<div class="row table-info" > <div class="col-sm-8 p-2">';
 	if(isset($rol))
@@ -40,7 +41,13 @@ for ($i=0; $i<count($response);$i++) {
 		$salida.=$fecha_formato."<br>Estado: ".$response[$i]['estado'];
 	$salida.='</div> </div>';
 
-	$salida.='<div class="m-1">';
+	if ($response[$i]['id_usuario']==$_SESSION['id']){
+		$salida.="<div id='editable' class='m-1' onclick='editar(\"".$_GET['dni']."\",\"".$response[$i]['nota']."\",\"".$response[$i]['estado']."\",\"".$response[$i]['id']."\")'>";
+	}
+	else {
+		$salida.='<div class="m-1">';
+	}
+
 	$salida.=$response[$i]['nota'];
 	$salida.='</div> </div>';
 	echo $salida;

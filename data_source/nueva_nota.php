@@ -6,6 +6,12 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 
 $curl = curl_init();
 
+$parametros=array('accion' => 'nota','cas' => $cod_acc_serv,'dni' => $_GET['dni'],'nota' => $_GET['nueva_nota'],'id_usuario' => $_SESSION['id'], 'estado' => $_GET['nuevo_estado']);
+if ($_GET['bot_modif']=='Actualizar') {
+	$parametros['accion']='actualizar_nota';
+	$parametros += [ 'id_nota' => $_GET['id_nota']];
+}
+
 curl_setopt_array($curl, array(
   CURLOPT_URL => $ser_ext.'serv_usu.php',
   CURLOPT_RETURNTRANSFER => true,
@@ -15,8 +21,11 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => array('accion' => 'nota','dni' => $_GET['dni'],'nota' => $_GET['nueva_nota'],'id_usuario' => $_SESSION['id'], 'estado' => $_GET['nuevo_estado']),
-));
+  CURLOPT_POSTFIELDS => $parametros));
+
+
+
+
 
 $response = curl_exec($curl);
 
