@@ -45,55 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	        
 	        header("HTTP/1.1 200 OK");
 	        exit();
-	        // Lo intente desde el servidor pero la funcion mail no va, no se porque
-	        /*
-	        $res = json_decode(curl_exec($curl), true);
-	        echo $res;                 
-	        if (count($res) === 1) {
-	            echo '1';
-	            // the message
-	            $msg = "Recuperación de Credenciales\nTu clave es: " . $res;
-	            // En windows hay que hcer conviersion
-	            $msg = str_replace("\n.", "\n..", $msg);
-	            // use wordwrap() if lines are longer than 70 characters
-	            //    $msg = wordwrap($msg, 70);
-	            // send email
-	            $email = $_GET['email'];
-	            $headers = array(
-	                'From' => 'fedelleos@gmail.com',
-	                'Reply-To' => 'fedelleos@gmail.com',
-	                'X-Mailer' => 'PHP/' . phpversion()
-	            );
-	            if (mail($email, "Covid - Recuperación de Credenciales", $msg,$headers)) {
-	                echo 'Enviado!';
-	                header("HTTP/1.1 200 OK");
-	                exit();
-	            }                    
-	        }
-	        */               
+	                 
 	    } 
-    /*
-    elseif ($_GET['accion'] == "envia_pass") {
-        // the message
-        $msg = "Recuperación de Credenciales\nTu clave es: " . $res;
-        // En windows hay que hcer conviersion
-        $msg = str_replace("\n.", "\n..", $msg);
-        // use wordwrap() if lines are longer than 70 characters
-        //    $msg = wordwrap($msg, 70);
-        // send email
-        $email = $_GET['email'];
-        $headers = array(
-            'From' => 'fedelleos@gmail.com',
-            'Reply-To' => 'fedelleos@gmail.com',
-            'X-Mailer' => 'PHP/' . phpversion()
-        );
-        if (mail($email, "Covid - Recuperación de Credenciales", $msg,$headers)) {
-            echo 'Enviado!';
-            header("HTTP/1.1 200 OK");
-            exit();
-        }
-    } 
-        */   
+   
            
 	}
 }   

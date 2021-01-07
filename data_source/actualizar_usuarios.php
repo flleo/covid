@@ -10,7 +10,8 @@ if (isset($_POST['submit'])) {
     $result = Consulta::updateUsuarios($conn);  //Actualiza usuarios de la lista
     if ($result) {
         switch ($_SESSION['rol']) {
-            case 'Administrador':header("Location:../administrador.php");
+            case 'Administrador':               
+                header("Location:../administrador.php");
                 break;
             case 'Rastreador':header("Location:../rastreador.php");
                 break;

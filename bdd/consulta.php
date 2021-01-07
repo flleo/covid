@@ -59,33 +59,39 @@ class Consulta
     }
 
     public static function updateUser($conn)
-    {   
-            $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido_1=?,Apellido_2=?,Email=?, Contrasena=? WHERE ID = ?");
-            $stmt->bind_param("sssssd", $_POST["nombre"], $_POST["apellido1"], $_POST["apellido2"], $_POST["email"], $_POST["password"], $_POST['submit']);
-            $stmt->execute();
-            $_SESSION['nombre'] = $_POST["nombre"];
-            $_SESSION['apellido1'] = $_POST["apellido1"];
-            $_SESSION['apellido2'] = $_POST["apellido2"];
-            $_SESSION['email'] = $_POST["email"];
-            $_SESSION['password'] = $_POST["password"];
+    {
+        $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido_1=?,Apellido_2=?,Email=?, Contrasena=? WHERE ID = ?");
+        $stmt->bind_param("sssssd", $_POST["nombre"], $_POST["apellido1"], $_POST["apellido2"], $_POST["email"], $_POST["password"], $_POST['submit']);
+        $stmt->execute();
+        $_SESSION['nombre'] = $_POST["nombre"];
+        $_SESSION['apellido1'] = $_POST["apellido1"];
+        $_SESSION['apellido2'] = $_POST["apellido2"];
+        $_SESSION['email'] = $_POST["email"];
+        $_SESSION['password'] = $_POST["password"];
 
-            return true;
-        
+        return true;
+
     }
-     
+
     // Actualiza los usuarios del listado, no el de la session
     public static function updateUsuarios($conn)
     {
-        if(isset($_POST['rol'])) {
+        if (isset($_POST['rol'])) {
             $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido_1=?,Apellido_2=?,Email=?, Contrasena=?,Roll=? WHERE ID = ?");
             $stmt->bind_param("ssssssd", $_POST["nombre"], $_POST["apellido1"], $_POST["apellido2"], $_POST["email"], $_POST["password"], $_POST["rol"], $_POST['submit']);
             $stmt->execute();
+            if ($_POST['submit'] == $_SESSION['id']) {
+                    $_SESSION['nombre'] = $_POST["nombre"];
+                    $_SESSION['apellido1'] = $_POST["apellido1"];
+                    $_SESSION['apellido2'] = $_POST["apellido2"];
+                    $_SESSION['email'] = $_POST["email"];
+                    $_SESSION['password'] = $_POST["password"];
+            }
         } else {
             $stmt = $conn->prepare("UPDATE user SET Nombre=?,Apellido_1=?,Apellido_2=?,Email=?, Contrasena=? WHERE ID = ?");
             $stmt->bind_param("sssssd", $_POST["nombre"], $_POST["apellido1"], $_POST["apellido2"], $_POST["email"], $_POST["password"], $_POST['submit']);
             $stmt->execute();
         }
-     
 
         return true;
     }
