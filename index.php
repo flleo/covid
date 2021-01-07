@@ -32,6 +32,8 @@ if(isset($_GET['log'])) {
     }
 }
 
+
+
   
 ?>
     <div class="container d-flex justify-content-center p-5">
