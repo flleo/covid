@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	        $sql->bindValue(':est', $_POST["estado"]);
 	        $sql->execute();        
 	
+		header("hola");
 	
-	
-	        header("HTTP/1.1 200 OK");
+
 	        exit();
 	    }
 	
