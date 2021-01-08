@@ -1,7 +1,7 @@
 
-ser_ext='http://192.168.0.57/vcserver/';
+//ser_ext='http://192.168.0.57/vcserver/';
 
-// ser_ext = 'http://192.168.1.10/covid/';
+ ser_ext = 'http://192.168.1.10/covid/';
 //      FUNCIONES PARA RASTREADOR
 
 cod_acc_serv='a2b7878e96994cfdf318';
@@ -32,7 +32,7 @@ function lista(id) {  // terminada
         .then(res => {
             if (res.length > 0) {
         
-                    document.getElementById("seccion").innerHTML = listadosMedico(res);
+                document.getElementById("seccion").innerHTML = listadosMedico(res);
              
             }
             else { alert('No coincide con ningún registro'); }

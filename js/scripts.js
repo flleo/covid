@@ -49,6 +49,11 @@ form.addEventListener('click',(e)=>{
     
 })  
 
+// Muestra el servidor de correo 
+var URLsearch = window.location.search;
+if(URLsearch == '?enviado!') {
+    window.open('http://localhost:5000', '_blank');
+}
 
 
 
