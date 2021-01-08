@@ -23,6 +23,9 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 	    </script>
 	   	<script type="text/javascript" src="js/cliente.js"></script>
+
+
+
 	   	<link rel="shortcut icon" href="img/logo_1.png"/>
 	   	<style type="text/css">
 	   		
@@ -117,3 +120,10 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 
 	</html>
 
+<?php 
+	if (isset($_GET['dni'])) {
+?>
+		<script type="text/javascript">editar("<?php echo $_GET['dni'] ?>")</script>
+<?php 
+	}
+ ?>

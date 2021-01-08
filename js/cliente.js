@@ -11,7 +11,6 @@ cod_acc_serv='a2b7878e96994cfdf318';
 
 function lista(id) {  // terminada
 
-    // document.getElementById("menu_medico").style.display="block";
     document.getElementById("adicional").innerHTML = "";
     document.getElementById("seccion").innerHTML = "";
   
