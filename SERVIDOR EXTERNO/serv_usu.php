@@ -110,6 +110,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	        echo "ok";
 	        header("HTTP/1.1 200 OK");
 	        exit();  
+		}else if ($_POST['accion']=="actualizar_paciente"){
+
+			$secuencia = "UPDATE paciente SET dni=:dni,nombre=:nom,apellido_1=:ap1,apellido_2=:ap2,email=:ema,telefono=:tel WHERE codigo_acceso=:cod";
+			$sql = $dbConn->prepare($secuencia);
+	        $sql->bindValue(':dni', $_POST["dni"]);
+	        $sql->bindValue(':cod', $_POST['codigo']);
+	        $sql->bindValue(':ema', $_POST["email"]);
+	        $sql->bindValue(':nom', $_POST["nombre"]);
+	        $sql->bindValue(':ap1', $_POST["apellido_1"]);
+	        $sql->bindValue(':ap2', $_POST["apellido_2"]);
+			$sql->bindValue(':tel', $_POST["telefono"]);
+			$sql->execute(); 
+			exit();
 		}
 	}
 	else {

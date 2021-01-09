@@ -28,38 +28,8 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') {
         <button id='buscar' class="btn btn-success" value=''>Buscar</button>
     </div>
     <div class='container-fluid'>
-        <div id='infoRastreador' class='text-center'>
-            <h2>Datos Personales</h2>
-            <div class='d-flex justify-content-center'>
-                <form action="" class='d-flex justify-content-between flex-column size'>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4 '>Codigo de Acceso:</label>
-                        <input type="text" disabled>
-                    </div>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4'>Nombre:</label>
-                        <input type="text">
-                    </div>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4'>Apellido 1:</label>
-                        <input type="text">
-                    </div>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4'>Apellido 2:</label>
-                        <input type="text">
-                    </div>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4'>DNI:</label>
-                        <input type="text">
-                    </div>
-                    <div class="form-inline d-flex justify-content-between flex-column">
-                        <label for="" class='h4'>Telefono:</label>
-                        <input type="tel">
-                    </div>
-                </form>
-            </div>
-                
-
+        <div id='infoRastreador' class='d-flex justify-content-center'>
+            
         </div>
 
         

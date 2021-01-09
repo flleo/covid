@@ -43,69 +43,69 @@ buscar.addEventListener('click', (e) => {
 
 seccion.addEventListener('click', (e) => {
 
-    if (e.target.id === 'nuevoPaciente') {
-        crearPaciente(e);
-    }
+    if (e.target.id === 'nuevoPaciente') crearPaciente(e);
+    else if (e.target.id === 'updatePaciente') actualizarPaciente();
+    else if (e.target.parentNode.classList[0] === 'dataPaciente') vistaPaciente(e.target.parentNode.id)
+
+
+
 })
 
 
 
 
 const formPaciente = () => {
+    seccion.classList.remove('text-center');
     const [url1, acceso] = url;
     seccion.innerHTML = `
-    <div class="d-flex justify-content-around m-2 border-bottom">
-        <div>DNI</div>
-        <div>Nombre</div>
-        <div>1 Apellido</div>
-        <div>2 Apellido</div>
-        <div>Email</div>
-        <div>Telefono</div>
-        <div>Estado</div>
-        <div>Boton</div>
-                       
-    </div>   
-    <form action='${url1}serv_usu.php' class='d-flex justify-content-around align-items-center' method='POST'>
-    <div>
-        <input type='text' name='nombre' placeholder='Enter email' id='nombre' require>
+    <div id="login-box" class="col-md-6">
+        <form id="login-form" method="post">
+            <h3 class="text-center text-info">Agregar Paciente</h3>
+            <div class="form-group">
+                <label for="email" class="text-info">Dni</label><br>
+                <input type="text" name="dni" id="dni" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="email" class="text-info">Email</label><br>
+                <input type="email" name="email" id="email" class="form-control" >
+            </div>
+            
+            <div class="form-group">
+                <label for="nombre" class="text-info">Nombre</label><br>
+                <input type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido1" class="text-info">Apellido1</label><br>
+                <input type="text" name="apellido_1" id="apellido_1" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido2" class="text-info">Apellido2</label><br>
+                <input type="text" name="apellido_2" id="apellido_2" class="form-control" >
+            </div>
+            <div class="form-group">
+                <label for="telefono" class="text-info">Teléfono</label><br>
+                <input type="text" name="telefono" id="telefono" class="form-control" required>
+            </div>  
+            <div class="form-group">
+                <select name='estado' id='estado' require>
+                    <option value=''>---Seleccionar---</option>
+                    <option value='contagiado'>Contagiado</option>
+                    <option value='fallecido'>Fallecido</option>
+                    <option value='curado'>Curado</option>
+                </select>
+            </div>                  
+            <div class="form-group">
+                <button id='nuevoPaciente' type="button" value='alta' name="submit" class="btn btn-info btn-md" >Nuevor</button>
+            </div>
+        </form>
     </div>
-    <div>
-        <input type='text' name='apellido_1' placeholder='Enter email' id='apellido_1' require>
-    </div>
-
-    <div>
-        <input type='text' name='apellido_2' placeholder='Enter email' id='apellido_2' require>
-    </div>
-
-    <div>
-        <input type='text' name='dni' placeholder='Enter email' id='dni'>
-    </div>
-
-    <div>
-        <input type='email' name='email' placeholder='Enter email' id='email'  require>
-    </div>
-
-    <div>
-        <input type='tel' name='telefono' placeholder='Enter email' id='telefono'  require>
-    </div>
-
-
-    <div>
-        <select name='estado' id='estado' require>
-            <option value=''>---Seleccionar---</option>
-            <option value='contagiado'>Contagiado</option>
-            <option value='fallecido'>Fallecido</option>
-            <option value='curado'>Curado</option>
-        </select>
-    </div>
-    <button name='accion' type='button' value='alta' id='nuevoPaciente' class='btn btn-success col-1'>Nuevo</button>
-</form>
     `;
 
 
 }
 
 const tablaPaciente = (pacientes) => {
+    seccion.classList.add('text-center');
     seccion.innerHTML = `
     <table class="table table-hover" id='listado'></table>`;
     document.getElementById('listado').innerHTML += `
@@ -122,7 +122,7 @@ const tablaPaciente = (pacientes) => {
 
     pacientes.forEach(e => {
         document.getElementById('listado').innerHTML += `
-            <tr id=${e.dni} >
+            <tr id=${e.dni} class='dataPaciente'>
                 <td class='paciente'>${e.dni}</td>
                 <td class='paciente'>${e.nombre}</td>
                 <td class='paciente'>${e.apellido_1}</td>
@@ -143,11 +143,55 @@ const datoPaciente = async(dni) => {
 
 }
 
-const vistaPaciente = () => {
+const vistaPaciente = async(dni) => {
+    seccion.classList.remove('text-center');
+
+    const [url1, acceso] = url;
+
+    let urlext = `${url1}serv_usu.php?accion=datos&cas=${acceso}&dni=${dni}`;
+
+    const x = await fetch(urlext);
+    const res = await x.json();
+
+    seccion.innerHTML = `
+    <div id="login-box" class="col-md-6">
+        <form id="login-form" method="post">
+            <h3 class="text-center text-info">Agregar Paciente</h3>
+            <div class="form-group">
+                <label for="email" class="text-info">Dni</label><br>
+                <input type="text" name="dni" id="dni" class="form-control" disabled value=${res[0].dni} >
+            </div>
+            <div class="form-group">
+                <label for="email" class="text-info">Email</label><br>
+                <input type="email" name="email" id="email" class="form-control" value=${res[0].email} >
+            </div>
+            
+            <div class="form-group">
+                <label for="nombre" class="text-info">Nombre</label><br>
+                <input type="text" name="nombre" id="nombre" class="form-control" value=${res[0].nombre} required>
+            </div>
+            <div class="form-group">
+                <label for="apellido1" class="text-info">Apellido1</label><br>
+                <input type="text" name="apellido_1" id="apellido_1" class="form-control" value=${res[0].apellido_1} required>
+            </div>
+            <div class="form-group">
+                <label for="apellido2" class="text-info">Apellido2</label><br>
+                <input type="text" name="apellido_2" id="apellido_2" class="form-control" value=${res[0].apellido_2} >
+            </div>
+            <div class="form-group">
+                <label for="telefono" class="text-info">Teléfono</label><br>
+                <input type="text" name="telefono" id="telefono" class="form-control" value=${res[0].telefono} required>
+            </div>                   
+            <div class="form-group">
+                <button id='updatePaciente' type="button" value="${res[0].codigo_acceso}" name="submit" class="btn btn-info btn-md" >Grabar</button>
+            </div>
+        </form>
+    </div>
+    `;
 
 }
 
-const crearPaciente = () => {
+const crearPaciente = (e) => {
     const [url1, acceso] = url;
     const data = new FormData();
 
@@ -161,13 +205,37 @@ const crearPaciente = () => {
     data.append('accion', `alta`);
     data.append('cas', `${acceso}`);
 
-    console.log(document.getElementById('estado').value)
-
     const config = {
         method: 'POST',
         body: data
     };
 
+
+    fetch(`${url1}serv_usu.php`, config)
+        .then(resp => {
+            if (resp.status == "404") console.log("algo paso")
+        })
+
+}
+
+const actualizarPaciente = () => {
+    const [url1, acceso] = url;
+    const data = new FormData();
+
+    data.append('nombre', `${document.getElementById('nombre').value}`);
+    data.append('apellido_1', `${document.getElementById('apellido_1').value}`);
+    data.append('apellido_2', `${document.getElementById('apellido_2').value}`);
+    data.append('dni', `${document.getElementById('dni').value}`);
+    data.append('email', `${document.getElementById('email').value}`);
+    data.append('telefono', `${document.getElementById('telefono').value}`);
+    data.append('codigo', `${document.getElementById('updatePaciente').value}`);
+    data.append('accion', `actualizar_paciente`);
+    data.append('cas', `${acceso}`);
+
+    const config = {
+        method: 'POST',
+        body: data
+    };
 
     fetch(`${url1}serv_usu.php`, config)
 
