@@ -1,6 +1,5 @@
 
 //ser_ext='http://192.168.0.57/vcserver/';
-
  ser_ext = 'http://192.168.1.10/covid/';
 //      FUNCIONES PARA RASTREADOR
 
