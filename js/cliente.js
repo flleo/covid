@@ -1,13 +1,12 @@
-//ser_ext='http://192.168.0.57/vcserver/';
-<<<<<<< HEAD
- ser_ext = 'http://192.168.1.10/covid/';
-=======
+// ser_ext='http://192.168.0.57/vcserver/';
+ser_ext = 'http://192.168.1.10/covid/';
+// ser_ext = 'http://192.168.1.17/servidor/';
 
 //ser_ext = 'http://192.168.1.17/covid/';
->>>>>>> a627c3cd3f767d1795d94756e27ffde74022d76a
+// >>>>>>> a627c3cd3f767d1795d94756e27ffde74022d76a
 //      FUNCIONES PARA RASTREADOR
 
-ser_ext = 'http://192.168.1.17/servidor/';
+
 
 cod_acc_serv = 'a2b7878e96994cfdf318';
 
