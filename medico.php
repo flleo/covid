@@ -35,6 +35,9 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 	   		#editable:hover {
 	   			color: blue;
 	   		}
+	   		input{
+	   			width: 100%;
+	   		}
 
 
 	   	</style>
@@ -47,32 +50,29 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 		<div class="container" id="listas">
 			<button type="button" onclick="lista(<?php echo $_SESSION['id']; ?>)" class="btn btn-primary btn-sm">Mis pacientes</button>
 			<button type="button" onclick="lista('')" class="btn btn-primary btn-sm">Lista completa</button>
-		
+			<button type='button' onclick='busqueda()' class='btn btn-primary btn-sm' title="Para buscar, introduzca un dni, un código de acceso o un primer apellido. La prioridad de búsqueda se hará en ese orden obviando el resto de datos. Para filtrar por estado, únicamente marque los estados que quiere recuperar">Buscar</button>
 		</div>
 
 
 		<div class="container" id="menu_medico">
 	
-			<form>
 				<div class='row'>
-					<div class='col-2'>
+					<div class='col-lg-3 col-md-6'>
 						<label for="apellido_1">Primer apellido</label><br>
 						<input type='text' name='apellido_1' id="apellido_1">
 					</div>
-					<div class='col-2'>
+					<div class='col-lg-3 col-md-6'>
 						<label for="apellido_2">Segundo apellido</label><br>
 						<input type='text' name='apellido_2' id="apellido_2"></div>
-					<div class='col-2'>
+					<div class='col-lg-2 col-md-3'>
 						<label for="nombre">Nombre</label><br>
 						<input type='text' name='nombre' id="nombre"></div>
-					<div class='col-2'>
+					<div class='col-lg-2 col-md-3'>
 						<label for="dni">D.N.I / N.I.E</label><br>
 						<input type='text' name='dni' id="dni"></div>
-					<div class='col-2'>
+					<div class='col-lg-2 col-md-3'>
 						<label for="codigo_acceso">Código de acceso</label><br>
 						<input type='text' name='codigo_acceso' id="codigo_acceso"></div>
-					<div class='col-2'><button type='button' onclick='busqueda()' class='btn btn-secondary btn-sm' title="Para buscar, introduzca un dni, un código de acceso o un primer apellido. La prioridad de búsqueda se hará en ese orden obviando el resto de datos. Para filtrar por estado, únicamente marque los estados que quiere recuperar">Buscar</button></div>
-	
 				</div>
 				<div class="container">
 					<label class="checkbox-inline">
@@ -86,7 +86,6 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 					</label>
 				</div>
 
-			</form>
 			<hr>
 			
 
@@ -120,10 +119,3 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 
 	</html>
 
-<?php 
-	if (isset($_GET['dni'])) {
-?>
-		<script type="text/javascript">editar("<?php echo $_GET['dni'] ?>")</script>
-<?php 
-	}
- ?>

@@ -110,33 +110,29 @@ async function datosPaciente(dni) { // terminado
     // datos del paciente
     var url = ser_ext + "serv_usu.php?accion=datos&cas=" + cod_acc_serv + "&dni=" + dni;
     var respuesta = "";
-
     const x = await fetch(url);
-    const res = await x.json()
+    const res = await x.json();
 
-    var respuesta = "<div class='row'> <div class='col-4'><b>Nombre: </b>" + res[0].nombre + " " + res[0].apellido_1 + " " + res[0].apellido_2 + "</div>";
-    respuesta += "<div class='col-2'><b>DNI: </b>" + dni + "</div><div class='col-2'><b>Teléfono: </b>" + res[0].telefono + "</div><div class='col-4'><b>Email: </b>" + res[0].email + "</div></div>";
-    respuesta += "<div class='row'> <div class='col-4'><b>Código de acceso personal: </b>" + res[0].codigo_acceso + "</div> <div class='col-8'><b>Estado actual: </b>" + res[0].estado + "</div></div>";
-
-
-    document.getElementById("seccion").innerHTML = respuesta;
-    document.getElementById('titulo').innerHTML = "Notas del paciente";
+    document.getElementById("nombreApell").innerHTML += res[0].nombre + " " + res[0].apellido_1 + " " + res[0].apellido_2;
+    document.getElementById("dni").innerHTML += res[0].dni;
+    document.getElementById("telefono").innerHTML += res[0].telefono;
+    document.getElementById("email").innerHTML += res[0].email;
+    document.getElementById("cap").innerHTML += res[0].codigo_acceso;
+    document.getElementById("estado").innerHTML += res[0].estado;
 }
 
 function historial(dni) { // Presenta el listado de notas del paciente
 
-    var cabecera = "<b><u>HISTORIA CLÍNICA</b></u><br>";
     var xhttp = new XMLHttpRequest();
-    var respuesta = cabecera + "Solicitando datos...";
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var respuesta = this.responseText;
-            document.getElementById("adicional").innerHTML = cabecera + respuesta;
+            document.getElementById("adicional").innerHTML =respuesta;
         }
     };
     xhttp.open("GET", 'data_source/notas_usuario.php?dni=' + dni, true);
     xhttp.send();
-    document.getElementById("adicional").innerHTML = respuesta;
+
 }
 
 
@@ -166,102 +162,65 @@ function limpiaFormMedico() { //terminado
 }
 
 function listadosMedico(res) { // terminado
-    var respuesta = "<div class='row text-center'>";
-    respuesta += "  <div class='col-4'>";
-    respuesta += "      <h5>Apellidos</h5>";
-    respuesta += "  </div>";
-    respuesta += "  <div class='col-2'>";
-    respuesta += "      <h5>Nombre</h5>";
-    respuesta += "  </div>";
-    respuesta += "  <div class='col-2'>";
-    respuesta += "      <h5>DNI</h5>";
-    respuesta += "  </div>";
-    respuesta += "  <div class='col-2'>";
-    respuesta += "      <h5>Código de acceso</h5>";
-    respuesta += "  </div>";
-    respuesta += "  <div class='col-2'>";
-    respuesta += "      <h5>Estado actual</h5>";
-    respuesta += "  </div>";
-    respuesta += "</div>";
+    var respuesta =`<table class="table table-hover" id='listado'>`;
+    respuesta+=`
+        <thead>
+            <tr class="text-center">
+                <th colspan='2'>Apellidos</th>
+                <th>Nombre</th>
+                <th>DNI</th>
+                <th>Código de acceso</th>
+                <th>Estado actual</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
     for (i = 0; i < res.length; i++) {
-        respuesta += "<div id='editable' class='row text-center' onclick='editar(\"" + res[i].dni + "\")'>";
-        respuesta += "  <div class='col-2'>" + res[i].apellido_1 + "</div>";
-        respuesta += "  <div class='col-2'>" + res[i].apellido_2 + "</div>";
-        respuesta += "  <div class='col-2'>" + res[i].nombre + "</div>";
-        respuesta += "  <div class='col-2'>" + res[i].dni + "</div>";
-        respuesta += "  <div class='col-2'>" + res[i].codigo_acceso + "</div>";
-        respuesta += "  <div class='col-2'>" + res[i].estado + "</div>";
-        respuesta += "</div>";
+        respuesta += `
+
+                <tr id='editable' class='text-center' onclick='window.location.replace("editar_paciente.php?dni=${res[i].dni}")'>
+                    <td>${res[i].apellido_1}</td>
+                    <td>${res[i].apellido_2}</td>
+                    <td>${res[i].nombre}</td>
+                    <td>${res[i].dni}</td>
+                    <td>${res[i].codigo_acceso}</td>
+                    <td>${res[i].estado}</td>
+                </tr>
+        `;
     }
+    respuesta += `</tbody></table>`;
     return respuesta;
 }
 
 function editar(dni, nota, estado, id_nota) { // Pasa a la ventana de edición, donde se carga el formulario de nuevas notas y el listado de notas (historial).
 
-    document.getElementById("menu_medico").style.display = "none";
-    document.getElementById("listas").style.display = "none";
 
-    datosPaciente(dni)
-        .then(res => {
-            formulario(dni);
-            if (nota != null) {
-                document.getElementById("nota").value = nota;
-                document.getElementById("bot_modif").value = "Actualizar";
-                document.getElementById("bot_modif").title = "Actualizar la nota";
-                document.getElementById("id_nota").value = id_nota;
+    if (nota != null) {
+        document.getElementById("nota").value = nota;
+        document.getElementById("bot_modif").value = "Actualizar";
+        document.getElementById("bot_modif").title = "Actualizar la nota";
+        document.getElementById("id_nota").value = id_nota;
 
-                switch (estado) {
-                    case 'contagiado':
-                        document.getElementById("est_cont").checked = true;
-                        break;
-                    case 'curado':
-                        document.getElementById("est_cur").checked = true;
-                        break;
-                    case 'fallecido':
-                        document.getElementById("est_fall").checked = true;
-                        break;
-                }
-            }
-        });
+        switch (estado) {
+            case 'contagiado':
+                document.getElementById("est_cont").checked = true;
+                break;
+            case 'curado':
+                document.getElementById("est_cur").checked = true;
+                break;
+            case 'fallecido':
+                document.getElementById("est_fall").checked = true;
+                break;
+        }
+    }
+    else {
+        historial(dni);        
+    }
 
-    historial(dni);
 }
 
-
-function formulario(dni) { // Presenta el formulario para añadir nuevas notas.
-    var respuesta = '<hr> <form id="nueva_nota" action="data_source/nueva_nota.php">';
-    respuesta += "<div class='form-group'>";
-    respuesta += "  <label for='nota'><b>Nota: </b></label>";
-    respuesta += "  <div class='row pb-2' >";
-    respuesta += "      <textarea class='form-control' rows='5' name='nueva_nota' id='nota' required></textarea>";
-    respuesta += "  </div>";
-    respuesta += "  <div class='row'>";
-    respuesta += "      <div class='col-10 text-left'>";
-    respuesta += "          <div class='form-check-inline'>";
-    respuesta += "              <label class='form-check-label' for='est_cont'> <input type='radio' class='form-check-input' name='nuevo_estado' id='est_cont' value='contagiado' checked>Contagiado</label>";
-    respuesta += "          </div>";
-    respuesta += "          <div class='form-check-inline'>";
-    respuesta += "              <label class='form-check-label' for='est_cur'> <input type='radio' class='form-check-input' name='nuevo_estado' id='est_cur' value='curado'>Curado</label>";
-    respuesta += "          </div>";
-    respuesta += "          <div class='form-check-inline'>";
-    respuesta += "              <label class='form-check-label' for='est_fall'> <input type='radio' class='form-check-input' name='nuevo_estado' id='est_fall' value='fallecido'>Fallecido</label>";
-    respuesta += "          </div>";
-    respuesta += "      </div>";
-    respuesta += "      <input type='hidden' name='dni' value='" + dni + "'>";
-    respuesta += "      <input type='hidden' name='id_nota' id='id_nota'>";
-    respuesta += "      <div class='col-2 text-right'>";
-    respuesta += "          <input type='submit' class='btn btn-secondary btn-sm' title='Añadir nota al historial del paciente' name='bot_modif' value='Añadir' id='bot_modif'>";
-    respuesta += "      </div>";
-    respuesta += "  </div>";
-    respuesta += "</div></form>";
-    respuesta += "<div class='col-12 text-right '>";
-    respuesta += "  <button class='btn btn-secondary btn-sm' title='Salir sin guardar los datos' onclick='confirmar()'>Salir</button>";
-    respuesta += "</div><hr>";
-    document.getElementById("seccion").innerHTML += respuesta;
-}
 
 function confirmar() { // Devuelve una alerta para el caso de pulsar el boton salir, si hay algún dato en la nota.
-    console.log("aki");
     if (document.getElementById("nota").value == "") {
         window.location.replace("medico.php");
     } else {

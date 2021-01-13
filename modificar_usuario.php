@@ -16,6 +16,7 @@
     </script>
     <!-- css -->
     <link rel="stylesheet" href="css/css.css">
+    <link rel="shortcut icon" href="img/logo_1.png"/>
 </head>
 
 <body>

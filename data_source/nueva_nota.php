@@ -30,8 +30,6 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 
 curl_close($curl);
-header("Location: ../medico.php?dni=".$_GET['dni']);
-
-
+header("Location: ../editar_paciente.php?dni=".$_GET['dni']);
 
 ?>
