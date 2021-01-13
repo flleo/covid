@@ -9,7 +9,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Médico') header("Location:
 <!DOCTYPE html>
 	<html lang="es">
 	<head>
-	<title>Covid - Paciente</title>
+	<title>Covid - Médico: edición paciente</title>
 	    <!-- Required meta tags -->
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
