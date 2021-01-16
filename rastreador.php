@@ -30,18 +30,9 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') {
         <button id='buscar' class="btn btn-success" value=''>Buscar</button>
     </div>
     <div class='container-fluid'>
-        <div id='infoRastreador' class='d-flex justify-content-center'>
-            
-        </div>
-
-        
-        
+        <div id='infoRastreador' class='d-flex justify-content-center'></div>
+        <div id='infoModal' class='d-flex justify-content-center'></div>
     </div>
-
-
-
-
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -53,7 +44,9 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Rastreador') {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
     <script src="./js/rastreador.js" type='module'></script>
+
 </body>
 
 </html>

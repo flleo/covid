@@ -1,6 +1,6 @@
-ser_ext='http://192.168.0.57/vcserver/';
+//ser_ext='http://192.168.0.57/vcserver/';
 //ser_ext = 'http://192.168.1.10/covid/';
-// ser_ext = 'http://192.168.1.17/servidor/';
+ser_ext = 'http://192.168.1.17/servidor/';
 
 //ser_ext = 'http://192.168.1.17/covid/';
 // >>>>>>> a627c3cd3f767d1795d94756e27ffde74022d76a
@@ -127,7 +127,7 @@ function historial(dni) { // Presenta el listado de notas del paciente
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var respuesta = this.responseText;
-            document.getElementById("adicional").innerHTML =respuesta;
+            document.getElementById("adicional").innerHTML = respuesta;
         }
     };
     xhttp.open("GET", 'data_source/notas_usuario.php?dni=' + dni, true);
@@ -162,8 +162,8 @@ function limpiaFormMedico() { //terminado
 }
 
 function listadosMedico(res) { // terminado
-    var respuesta =`<table class="table table-hover" id='listado'>`;
-    respuesta+=`
+    var respuesta = `<table class="table table-hover" id='listado'>`;
+    respuesta += `
         <thead>
             <tr class="text-center">
                 <th colspan='2'>Apellidos</th>
@@ -212,9 +212,8 @@ function editar(dni, nota, estado, id_nota) { // Pasa a la ventana de edición, 
                 document.getElementById("est_fall").checked = true;
                 break;
         }
-    }
-    else {
-        historial(dni);        
+    } else {
+        historial(dni);
     }
 
 }

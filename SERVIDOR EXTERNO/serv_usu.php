@@ -16,24 +16,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	        // recibe: dni, nombre, apellido, apellido_2, email, teléfono, estado, id_usuario,
 	        // devuelve: nada
 	
-	
+		$resp = array();
 	        $cod_acc=substr(md5(uniqid(srand(time()))),0,8);
 	
 	        $secuencia = "INSERT INTO paciente (dni, codigo_acceso, email, nombre, apellido_1, apellido_2, telefono, estado) VALUES (:dni, :cod, :ema, :nom, :ap1, :ap2, :tel, :est);";
 	
-	        $sql = $dbConn->prepare($secuencia);
-	        $sql->bindValue(':dni', $_POST["dni"]);
-	        $sql->bindValue(':cod', $cod_acc);
-	        $sql->bindValue(':ema', $_POST["email"]);
-	        $sql->bindValue(':nom', $_POST["nombre"]);
-	        $sql->bindValue(':ap1', $_POST["apellido_1"]);
-	        $sql->bindValue(':ap2', $_POST["apellido_2"]);
-	        $sql->bindValue(':tel', $_POST["telefono"]);
-	        $sql->bindValue(':est', $_POST["estado"]);
-	        $sql->execute();        
-	
-		header("hola");
-	
+			try {
+				$sql = $dbConn->prepare($secuencia);
+				$sql->bindValue(':dni', $_POST["dni"]);
+				$sql->bindValue(':cod', $cod_acc);
+				$sql->bindValue(':ema', $_POST["email"]);
+				$sql->bindValue(':nom', $_POST["nombre"]);
+				$sql->bindValue(':ap1', $_POST["apellido_1"]);
+				$sql->bindValue(':ap2', $_POST["apellido_2"]);
+				$sql->bindValue(':tel', $_POST["telefono"]);
+				$sql->bindValue(':est', $_POST["estado"]);
+				$sql->execute();  
+				
+		
+				//header("HTTP/1.1 200 OK");
+				array_push($resp, "Se ha Agregado Correctamente", "cerrar");
+				
+			} catch (PDOException $exception) {
+				//header("HTTP/1.1 400 PASO ALGO");
+				//echo "mal";
+				array_push($resp, "Fallo el agregado", "cerra");
+				
+			}
+		$vista = json_encode($resp);
+
+		print_r($vista);
 
 	        exit();
 	    }
@@ -111,18 +123,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	        header("HTTP/1.1 200 OK");
 	        exit();  
 		}else if ($_POST['accion']=="actualizar_paciente"){
+			
+			$resp = array();
 
-			$secuencia = "UPDATE paciente SET dni=:dni,nombre=:nom,apellido_1=:ap1,apellido_2=:ap2,email=:ema,telefono=:tel WHERE codigo_acceso=:cod";
+			$secuencia = "UPDATE paciente SET nombre=:nom,apellido_1=:ap1,apellido_2=:ap2,email=:ema,telefono=:tel WHERE codigo_acceso=:cod";
 			$sql = $dbConn->prepare($secuencia);
-	        $sql->bindValue(':dni', $_POST["dni"]);
-	        $sql->bindValue(':cod', $_POST['codigo']);
-	        $sql->bindValue(':ema', $_POST["email"]);
-	        $sql->bindValue(':nom', $_POST["nombre"]);
-	        $sql->bindValue(':ap1', $_POST["apellido_1"]);
-	        $sql->bindValue(':ap2', $_POST["apellido_2"]);
-			$sql->bindValue(':tel', $_POST["telefono"]);
-			$sql->execute(); 
-			exit();
+
+			try{
+				$sql->bindValue(':cod', $_POST['codigo']);
+				$sql->bindValue(':ema', $_POST["email"]);
+				$sql->bindValue(':nom', $_POST["nombre"]);
+				$sql->bindValue(':ap1', $_POST["apellido_1"]);
+				$sql->bindValue(':ap2', $_POST["apellido_2"]);
+				$sql->bindValue(':tel', $_POST["telefono"]);
+				$sql->execute(); 
+				array_push($resp, "Se ha agregado exitosamente", "cerrar");
+				
+			}catch (PDOException $exception) {
+				//header("HTTP/1.1 400 PASO ALGO");
+				//echo "mal";
+				array_push($resp, "Fallo el agregado", "cerra");
+				
+			}
+		$vista = json_encode($resp);
+
+		print_r($vista);
+		exit();
 		}
 	}
 	else {

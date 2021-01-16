@@ -7,3 +7,33 @@
 tr {
     cursor: pointer;
 }
+
+.pantalla {
+    background-color: #00000044;
+}
+
+.input_forma {
+    position: relative;
+}
+
+.formulario__validacion-estado {
+    position: absolute;
+    top: 43px;
+    right: 10px;
+}
+
+.show {
+    opacity: 0;
+}
+
+.fade {
+    opacity: 1;
+}
+
+.error {
+    color: red;
+}
+
+.valido {
+    color: green;
+}
