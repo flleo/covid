@@ -32,8 +32,6 @@ if(isset($_GET['log'])) {
     }
 }
 
-
-
   
 ?>
     <div class="container d-flex justify-content-center p-5">
@@ -67,7 +65,7 @@ if(isset($_GET['log'])) {
                     </div>
                     <div class="form-group">
                         <label for="code" class="text-info">Código de acceso</label><br>
-                        <input type="text" name="code" id="code" class="form-control"  required>
+                        <input type="password" name="code" id="code" class="form-control"  required>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-info btn-md">Entrar</button>

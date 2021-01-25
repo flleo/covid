@@ -1,4 +1,5 @@
 <?php
+    
     session_start();
     // Jose Luis
     require '../bddsx/config.php';
@@ -7,12 +8,13 @@
     /* Autor adrian */
     require('../bdd/config.php');
     require('../bdd/consulta.php');
-
+   
 
     if(isset($_POST['email']) &&  isset($_POST['password'])) {
-        $conn = Cuentas::login();
-        $result = Consulta::verificarUser($conn);
    
+        $conn = Cuentas::login(); 
+        $result = Consulta::verificarUser($conn);
+       
         $num_row = $result->num_rows;
 
         if($num_row === 1){
@@ -44,7 +46,7 @@
 
     // añadido José Luis
 
-    if(isset($_POST['dni']) &&  isset($_POST['code'])){
+    if(isset($_POST['dni']) &&  isset($_POST['code'])){        
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $ser_ext.'serv_pac.php?cas='.$cod_acc_serv.'&accion=datos&dni='.$_POST['dni'].'&codigo_acceso='.$_POST['code'],
@@ -56,9 +58,11 @@
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
         ));
-
-        $response = json_decode(curl_exec($curl),true);
+      
+        $response = json_decode(curl_exec($curl),true); 
         curl_close($curl);
+        echo $response;
+        echo 'hola';
 
         if (count($response)===1) {
             $_SESSION['user_type'] = 'paciente';
@@ -68,7 +72,9 @@
             $_SESSION['apellido_1'] = $response[0]['apellido_1'] ;
             $_SESSION['apellido_2'] = $response[0]['apellido_2'];
             $_SESSION['estado'] = $response[0]['estado'];
-            header("Location:../paciente.php");
+            header("Location:../paciente.php"); 
+        } else {
+           
         }
         
 

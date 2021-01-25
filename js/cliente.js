@@ -1,6 +1,6 @@
 //ser_ext='http://192.168.0.57/vcserver/';
-//ser_ext = 'http://192.168.1.10/covid/';
-ser_ext = 'http://192.168.1.17/servidor/';
+ser_ext = 'http://192.168.1.10/covid/';
+//ser_ext = 'http://192.168.1.17/servidor/';
 
 //ser_ext = 'http://192.168.1.17/covid/';
 // >>>>>>> a627c3cd3f767d1795d94756e27ffde74022d76a

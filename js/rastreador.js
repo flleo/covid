@@ -22,21 +22,19 @@ var validacion = {
 var { dni, email, nombre, apellido_1, apellido_2, phone, estado } = validacion;
 /* Evento */
 
-
-addEventListener('load', (e) => {
-
+addEventListener('load', async (e) => {
 
     const data = new FormData();
 
-    data.append('envio', '1');
+    data.append('envio', '1');  //name=envio value=1
 
     const config = {
         method: 'POST',
         body: data
     };
 
-
-    fetch("./bddsx/config.php", config)
+    // Recoge datos del php 
+    await fetch("./bddsx/config.php", config)
         .then(res => res.json())
         .then(resp => url = resp)
 })
@@ -240,17 +238,17 @@ const vistaPaciente = async(dni) => {
             
             <div class="form-group input_forma">
                 <label for="nombre" class="text-info">Nombre</label><br>
-                <input type="text" name="nombre" id="nombre" class="form-control" value=${res[0].nombre} required>
+                <input type="text" name="nombre" id="nombre" class="form-control" value="${res[0].nombre}" required>
                 <i class="formulario__validacion-estado fas fa-times-circle show error"></i>
             </div>
             <div class="form-group input_forma">
                 <label for="apellido1" class="text-info">Apellido1</label><br>
-                <input type="text" name="apellido_1" id="apellido_1" class="form-control" value=${res[0].apellido_1} required>
+                <input type="text" name="apellido_1" id="apellido_1" class="form-control" value="${res[0].apellido_1}" required>
                 <i class="formulario__validacion-estado fas fa-times-circle show error"></i>
             </div>
             <div class="form-group input_forma">
                 <label for="apellido2" class="text-info">Apellido2</label><br>
-                <input type="text" name="apellido_2" id="apellido_2" class="form-control" value=${res[0].apellido_2} >
+                <input type="text" name="apellido_2" id="apellido_2" class="form-control" value="${res[0].apellido_2}" >
                 <i class="formulario__validacion-estado fas fa-times-circle show error"></i>
             </div>
             <div class="form-group input_forma">
@@ -290,14 +288,12 @@ const crearPaciente = async(e) => {
         };
 
 
-
-
         try {
             const ft = await fetch(`${url1}serv_usu.php`, config);
             const text = await ft.json();
             await modal(text);
         } catch (error) {
-            await modal(error);
+            modal([error, 'cerrar']);
         }
     } else {
         modal(['Error: Unos de los Campos es invalido.', 'cerra']);

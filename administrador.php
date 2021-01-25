@@ -24,98 +24,112 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'Administrador') {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
-	<link rel="shortcut icon" href="img/logo_1.png"/>
-    
-
+    <link rel="shortcut icon" href="img/logo_1.png" />
 </head>
-
+<style type="text/css">
+td input  {
+    width: 150px;
+}
+button {
+    width: 85px;
+}
+</style>
 <body>
     <?php include 'navbar.php';?>
-    <div class="container">
-        <div class="h3 text-center">Listado de Usuarios</div>
-        <div class="d-flex justify-content-around  p-3 m-2 border-bottom">
-            <div>Nombre</div>
-            <div>1 Apellido</div>
-            <div>2 Apellido</div>
-            <div>Email</div>
-            <div>Contraseña</div>
-            <div>Roll</div>
-            <div></div>
-        </div>
-        <div>
-            <form action="data_source/nuevo_usuario.php" class="d-flex justify-content-around p-3 m-2 border-bottom"
-                method="post">
-                <div class="form-group">
-                    <input type="text" name='nombre' placeholder="Enter email" id="newNombre" require>
-                </div>
-                <div class="form-group">
-                    <input type="text" name='apellido1' placeholder="Enter email" id="newapellido1" require>
-                </div>
-                <div class="form-group">
-                    <input type="text" name='apellido2' placeholder="Enter email" id="newApellido2">
-                </div>
-                <div class="form-group">
-                    <input type="email" name='email' placeholder="Enter email" id="newEmail" require>
-                </div>
-                <div class="form-group">
-                    <input type='password' name='password' placeholder="Enter email" id="newPass" require>
-                </div>
-                <div class="form-group">
-                    <select id='select' name='rol' require>
-                        <option value='Médico'>Médico</option>
-                        <option value='Rastreador'>Rastreador</option>
-                        <option value='Administrador'>Administrador</option>
-                    </select>
-                </div>
-                <button name='submit' type="submit" class="btn btn-success col-1 p-0 " style="height:25px;">Nuevo</button>
-            </form>
-        </div>
+    <div class="container  d-flex flex-column">      
+    <div class="h3 text-center">Listado de Usuarios</div>      
+        <table class="table ">      
+            <thead>
+                <tr>
+                    <th >Nombre</th>
+                    <th>1er Apellido</th>
+                    <th>2º Apellido</th>
+                    <th>Email</th>
+                    <th>Contraseña</th>
+                    <th>Roll</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <form action="data_source/nuevo_usuario.php"
+                        class="d-flex justify-content-around p-3 m-2 border-bottom" method="post">
+                        <td class="form-group ">
+                            <input  type="text" name='nombre' placeholder="Nombre" id="newNombre" require>
+                        </td>
+                        <td class="form-group">
+                            <input type="text" name='apellido1' placeholder="Apellido" id="newapellido1" require>
+                        </td>
+                        <td class="form-group">
+                            <input type="text" name='apellido2' placeholder="Apellido" id="newApellido2">
+                        </td>
+                        <td class="form-group">
+                            <input type="email" name='email' placeholder="Email" id="newEmail" require>
+                        </td>
+                        <td class="form-group">
+                            <input type='password' name='password' placeholder="Contraseña" id="newPass" require>
+                        </td>
+                        <td class="form-group">
+                            <select id='select' name='rol' require style="height:35px;">
+                                <option value='Médico'>Médico</option>
+                                <option value='Rastreador'>Rastreador</option>
+                                <option value='Administrador'>Administrador</option>
+                            </select>
+                        </td>
+                        <td><button name='submit' type="submit" class="btn btn-success   "
+                                style="height:35px;">Nuevo</button>
+                        </td>
+                    </form>
+                </tr>
 
-        <?php
+                <?php
 
 include 'data_source/listado_usuarios.php';
 
 $rows = $result->num_rows;
+
 for ($i = 1; $i <= $rows;) {
     foreach ($result as $key) {
-?>
-        <div id='listado'>
-            <form action='data_source/actualizar_usuarios.php'
-                class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
-                <div class='form-group'>
-                    <input name='nombre' type='text' value=<?php echo $key['Nombre'] ?> require>
-                </div>
-                <div class='form-group'>
-                    <input name='apellido1' type='text' value=<?php echo $key['Apellido_1']?> require>
-                </div>
-                <div class='form-group'>
-                    <input name='apellido2' type='text' value=<?php echo $key['Apellido_2']?>>
-                </div>
-                <div class='form-group'>
-                    <input name='email' type='text' value=<?php echo $key['Email']?>>
-                </div>
-                <div class='form-group'>
-                    <input name='password' type='password' value=<?php echo $key['Contrasena']?> require>
-                </div>
-                <div class='form-group'>
-                    <select id='select' name='rol' require>
-                        <option value=<?php echo $key['Roll'] ?>><?php echo $key['Roll']?></option>
-                        <option value='Médico'>Medico</option>
-                        <option value='Rastreador'>Rastreador</option>
-                        <option value='Administrador'>Administrador</option>
-                    </select>
-                </div>
-                <button type='submit' name='submit' value=<?php echo $key['ID']?>
-                    class='btn btn-primary col-1 col-1 p-0' style="height:25px;">Modificar</button>
-            </form>
-        </div>
-        <?php
-        $i++;
+        ?>
+                <tr>
+                    <form id='listado' action='data_source/actualizar_usuarios.php'
+                        class='d-flex justify-content-around p-3 m-2 border-bottom' method='post'>
+                        <td class='form-group'>
+                            <input name='nombre' type='text' value=<?php echo $key['Nombre'] ?> require>
+                        </td>
+                        <td class='form-group'>
+                            <input name='apellido1' type='text' value=<?php echo $key['Apellido_1'] ?> require>
+                        </td>
+                        <td class='form-group'>
+                            <input name='apellido2' type='text' value=<?php echo $key['Apellido_2'] ?>>
+                        </td>
+                        <td class='form-group'>
+                            <input name='email' type='text' value=<?php echo $key['Email'] ?>>
+                        </td>
+                        <td class='form-group'>
+                            <input name='password' type='password' value=<?php echo $key['Contrasena'] ?> require>
+                        </td>
+                        <td class='form-group'>
+                            <select id='select' name='rol' require style="height:35px;">
+                                <option value=<?php echo $key['Roll'] ?>><?php echo $key['Roll'] ?></option>
+                                <option value='Médico'>Médico</option>
+                                <option value='Rastreador'>Rastreador</option>
+                                <option value='Administrador'>Administrador</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type='submit' name='submit' value=<?php echo $key['ID'] ?>
+                                class='btn btn-primary ' style="height:35px;">Modificar</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php        
+$i++;
     }
 }
-
 ?>
-
+            </tbody>
+        </table>
 
     </div>
 
